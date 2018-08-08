@@ -1,0 +1,13 @@
+{
+"hint": "the Pipe character, '|', means OR. The first horizontal line contains either 'AA' or 'BB'. The first row tells us which of the two is correct.",
+"Alphabet":["A","B"],
+"field": {
+"00": "A",
+"01": "B",
+"10": "A",
+"11": "A"}, 
+"regexes":[
+ {"positions":["00","10"], "regex": "AA|BB"},
+ {"positions":["01","11"], "regex": "B."},
+ {"positions":["00","01"], "regex": "A."},
+ {"positions":["10","11"], "regex": "AA|BB"}]}

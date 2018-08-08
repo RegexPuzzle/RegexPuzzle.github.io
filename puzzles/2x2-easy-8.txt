@@ -1,0 +1,12 @@
+{
+"Alphabet":["A","B","C","D","E","F","G","H","I","J","K","L"],
+"field": {
+"00": "D",
+"01": "E",
+"10": "C",
+"11": "I"}, 
+"regexes":[
+ {"positions":["00","10"], "regex": ".."},
+ {"positions":["01","11"], "regex": ".I"},
+ {"positions":["00","01"], "regex": "(DE|DEE)"},
+ {"positions":["10","11"], "regex": ".?C.?"}]}

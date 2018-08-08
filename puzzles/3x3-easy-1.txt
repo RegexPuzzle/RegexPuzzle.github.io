@@ -1,0 +1,19 @@
+{
+"Alphabet":["A","B","C","D","E","F","G","H","I","J","K","L"],
+"field": {
+"00": "B",
+"01": "H",
+"02": "H",
+"10": "H",
+"11": "L",
+"12": "I",
+"20": "D",
+"21": "C",
+"22": "I"}, 
+"regexes":[
+ {"positions":["00","10","20"], "regex": "B(DD|HD)"},
+ {"positions":["01","11","21"], "regex": "..."},
+ {"positions":["02","12","22"], "regex": ".(GGG|II)"},
+ {"positions":["00","01","02"], "regex": "(HHB|BHH)"},
+ {"positions":["10","11","12"], "regex": "(HLI|ILH)"},
+ {"positions":["20","21","22"], "regex": ".?(CB|DC).?"}]}

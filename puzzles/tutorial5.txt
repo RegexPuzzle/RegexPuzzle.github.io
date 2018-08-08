@@ -1,0 +1,20 @@
+{
+"hint": "A '*' means that a sub-regex may be contained zero or more times, a '+' means at least once. The first row contains only 'B's. The second row starts with a 'B' after that the ony possibilities are 'BB|AA|BA'. The thirs row contains only 'B's and 'C's. The middle column contains one and only one B.",
+"Alphabet":["A","B","C"],
+"field": {
+"00": "B",
+"01": "B",
+"02": "B",
+"10": "B",
+"11": "A",
+"12": "C",
+"20": "B",
+"21": "A",
+"22": "B"}, 
+"regexes":[
+ {"positions":["00","10","20"], "regex": "B*"},
+ {"positions":["01","11","21"], "regex": "B+A*"},
+ {"positions":["02","12","22"], "regex": "[BC]*"},
+ {"positions":["00","01","02"], "regex": ".B*"},
+ {"positions":["10","11","12"], "regex": "[^B]*B[^B]*"},
+ {"positions":["20","21","22"], "regex": "B[^B]*"}]}

@@ -1,0 +1,20 @@
+{
+"hint": "The '\\' after round rackets'()', means that the text mached between the brackets is repeated. the number after the '\\' specifies which pair of brackets should be used, '1' meaning the first open bracket and its matching closing bracket.",
+"Alphabet":["A","B","C"],
+"field": {
+"00": "B",
+"01": "A",
+"02": "A",
+"10": "B",
+"11": "B",
+"12": "A",
+"20": "B",
+"21": "C",
+"22": "A"}, 
+"regexes":[
+ {"positions":["00","10","20"], "regex": "(.)\\1B"},
+ {"positions":["01","11","21"], "regex": "A.*B(C+)"},
+ {"positions":["02","12","22"], "regex": "(.)\\1\\1"},
+ {"positions":["00","01","02"], "regex": "[AB]..?"},
+ {"positions":["10","11","12"], "regex": "[BC]*[AB]"},
+ {"positions":["20","21","22"], "regex": "B*CA?"}]}

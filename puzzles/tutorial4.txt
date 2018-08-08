@@ -1,0 +1,13 @@
+{
+"hint": "If the first character of a bracket group is a '^', the regex maches any character that is not contained between the rest of the brackets. The first row thus does not start with a 'B'.",
+"Alphabet":["A","B", "C"],
+"field": {
+"00": "A",
+"01": "B",
+"10": "A",
+"11": "C"}, 
+"regexes":[
+ {"positions":["00","10"], "regex": "[^B]."},
+ {"positions":["01","11"], "regex": ".C"},
+ {"positions":["00","01"], "regex": "AB|BA"},
+ {"positions":["10","11"], "regex": "AC|CB"}]}

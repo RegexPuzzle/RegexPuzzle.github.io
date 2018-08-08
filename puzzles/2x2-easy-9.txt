@@ -1,0 +1,12 @@
+{
+"Alphabet":["A","B","C","D","E","F","G","H","I","J","K","L"],
+"field": {
+"00": "L",
+"01": "B",
+"10": "B",
+"11": "B"}, 
+"regexes":[
+ {"positions":["00","10"], "regex": "L."},
+ {"positions":["01","11"], "regex": "(.)\\1"},
+ {"positions":["00","01"], "regex": "(LB|KL)"},
+ {"positions":["10","11"], "regex": "(.)\\1"}]}

@@ -1,0 +1,13 @@
+{
+"hint": "This puzzle contains 4 fields. Each line and row of fields is described using regular expressions (regex). A letter in the regtex means that the cell should contain that letter, a dot means that the cell may contain any letter. The first row thus starts with an 'A'",
+"Alphabet":["A","B","C","D","E","F","G","H","I","J","K","L"],
+"field": {
+"00": "A",
+"01": "C",
+"10": "B",
+"11": "B"}, 
+"regexes":[
+ {"positions":["00","10"], "regex": "A."},
+ {"positions":["01","11"], "regex": ".B"},
+ {"positions":["00","01"], "regex": ".C"},
+ {"positions":["10","11"], "regex": "B."}]}
