@@ -1,7 +1,7 @@
 // Offline use of the installed app: the pages, scripts and every puzzle are cached when the app is installed.
 // Network first, so a new version (and new puzzles) arrive when online; the cache answers when offline. Requests are
 // matched without their query (?v=N), so the cached copy serves any version link.
-var CACHE = "regex-puzzles-8"; // raise when puzzles or files are added: installed apps then fetch the full set again
+var CACHE = "regex-puzzles-9"; // raise when puzzles or files are added: installed apps then fetch the full set again
 var SHELL = [
     "Overview.html", "index.html", "css/index.css",
     "js/names.js", "js/Overview.js", "js/index.js", "js/StartPuzzle.js",

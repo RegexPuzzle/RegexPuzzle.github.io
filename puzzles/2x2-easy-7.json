@@ -1,19 +1,19 @@
 {
 "Alphabet":["A","B","C","D","E","F","G","H","M","J","K","L"],
 "field": {
-"00": "H",
-"01": "D",
-"10": "L",
+"00": "B",
+"01": "K",
+"10": "M",
 "11": "K"}, 
 "regexes":[
- {"positions":["00","10"], "regex": ".?L.?"},
- {"positions":["01","11"], "regex": ".?D.?"},
- {"positions":["00","01"], "regex": "H."},
- {"positions":["10","11"], "regex": ".K"}],
+ {"positions":["00","10"], "regex": ".?B.?"},
+ {"positions":["01","11"], "regex": ".K"},
+ {"positions":["00","01"], "regex": ".?K.?"},
+ {"positions":["10","11"], "regex": ".?M.?"}],
 "steps":[
- {"cell":"00", "lines":[2]},
- {"cell":"11", "lines":[3]},
- {"cell":"10", "lines":[0]},
- {"cell":"01", "lines":[1]}],
-"grade": {"medium":0, "depth":2},
-"difficulty": 1}
+ {"cell":"11", "lines":[1]},
+ {"cell":"10", "lines":[3]},
+ {"cell":"00", "lines":[0]},
+ {"cell":"01", "lines":[2]}],
+"grade": {"medium":0, "depth":4},
+"difficulty": 5}
