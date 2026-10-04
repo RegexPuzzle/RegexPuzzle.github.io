@@ -1,0 +1,19 @@
+{
+"Alphabet":["A","B","C","D","E","F","G","H","M","J","K","L"],
+"field": {
+"00": "C",
+"01": "M",
+"10": "D",
+"11": "D"}, 
+"regexes":[
+ {"positions":["00","10"], "regex": ".?D.?"},
+ {"positions":["01","11"], "regex": "MD|KM"},
+ {"positions":["00","01"], "regex": "MC|CM"},
+ {"positions":["10","11"], "regex": ".."}],
+"steps":[
+ {"cell":"10", "lines":[0,2]},
+ {"cell":"00", "lines":[1,2]},
+ {"cell":"01", "lines":[2]},
+ {"cell":"11", "lines":[1]}],
+"grade": {"medium":2, "depth":4},
+"difficulty": 5}

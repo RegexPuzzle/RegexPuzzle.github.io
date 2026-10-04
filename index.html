@@ -23,33 +23,46 @@
         <meta name="format-detection" content="telephone=no" />
         <meta name="msapplication-tap-highlight" content="no" />
         <!-- WARNING: for iOS 7, remove the width=device-width and height=device-height attributes. See https://issues.apache.org/jira/browse/CB-4323 -->
-        <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=2, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" />
-        <link rel="stylesheet" type="text/css" href="css/index.css" />
-        <title>RexEx puzzle</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link rel="stylesheet" type="text/css" href="css/index.css?v=23" />
+        <link rel="manifest" href="manifest.webmanifest" />
+        <meta name="theme-color" content="#0f6e78" />
+        <link rel="apple-touch-icon" href="icons/icon-192.png" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <title>RegEx puzzle</title>
     </head>
     <body>
         <div class="app">
 
-            <div id="AllButtons" style="position:fixed;left:10;top:20;width:100%!important">
-                <button type="button" onclick="gotomain()">Home</button>
-                <button type="button" onclick="testField(true)">Validate</button>
-                <button type="button" onclick="SetNextOR('/')">/</button>
-                <button type="button" onclick="SetText('.')">Clear</button>
-                <button type="button" onclick="RotateField(-30)">Rotate left</button>
-                <button type="button" onclick="RotateField(30)">Rotate right</button>
-                <div id="Alphabet"></div>
-                <div id="Hint"></div>
-                <div style="background-color: white; width: 150px;position: absolute; left: 50%; margin-left: -75px;">
-                    <div id="PuzzleName"></div>
-                </div>
-                
+            <div id="AllButtons" class="toolbar">
+                <button type="button" class="tool" onclick="gotomain()"><span aria-hidden="true">&#x2302;</span><small>Home</small></button>
+                <button type="button" class="tool" id="HintButton" onclick="ToggleHints()" aria-pressed="false" title="Colour the filled cells: green is right, red is wrong (Enter)"><span aria-hidden="true">&#x2726;</span><small>Hint</small></button>
+                <button type="button" class="tool" onclick="SetNextOR()" title="The next letter is added as an alternative (/)"><span aria-hidden="true">/</span><small>Or</small></button>
+                <button type="button" class="tool" onclick="SetText('.')" title="Clear the selected cells (Backspace)"><span aria-hidden="true">&#x232B;</span><small>Clear</small></button>
+                <button type="button" class="tool" onclick="FitView()" title="Show the whole puzzle (pinch or scroll to zoom, drag the empty space to move)"><span aria-hidden="true">&#x2922;</span><small>Fit</small></button>
+                <button type="button" class="tool" id="FullScreenButton" onclick="ToggleFullScreen()" title="Full screen" hidden><svg viewBox="0 0 20 20" width="15" height="15" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path class="enter" d="M2 7V2h5M13 2h5v5M18 13v5h-5M7 18H2v-5" /><path class="leave" d="M7 2v5H2M18 7h-5V2M13 18v-5h5M2 13h5v5" /></svg><small>Full</small></button>
+                <button type="button" class="tool" onclick="OpenSettings()" title="Settings"><span aria-hidden="true">&#x2699;</span><small>Setup</small></button>
             </div>
-            <svg id="SVG" height="1000px" width="1000px" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" /></svg>
+            <div class="status">
+                <span id="PuzzleName"></span>
+                <span id="PuzzleStars" class="stars"></span>
+                <span class="progress"><span class="bar"><i id="ProgressBar"></i></span><span id="ProgressText"></span></span>
+            </div>
+            <div id="Solved" role="alert" hidden></div>
+            <div id="Hint"></div>
+            <div id="Message" role="status" aria-live="polite"></div>
+            <svg id="SVG" role="grid" aria-label="Puzzle: select cells with the mouse, a finger or the arrow keys, type letters to fill them" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"></svg>
+            <div id="RotateBox" class="rotate">
+                <input type="range" id="RotateSlider" min="-180" max="180" step="5" value="0" aria-label="Turn the board (up: to the left)" title="Turn the board" />
+                <button type="button" id="RotateValue" title="Back to 0°" aria-label="Turn back to 0 degrees">0°</button>
+            </div>
+            <div id="Alphabet" class="letterpad" aria-label="Letters"></div>
 
         </div>
 
-        <script type="text/javascript" src="js/index.js"></script>
-        <script src="js/StartPuzzle.js"></script>
+        <script src="js/names.js?v=23"></script>
+        <script type="text/javascript" src="js/index.js?v=23"></script>
+        <script src="js/StartPuzzle.js?v=23"></script>
         <script>
             /*
             function getQueryParams(qs) {
@@ -74,6 +87,11 @@
                 DoPuzzle(window.location.hash.substr(1));
             else
                 gotomain();
+            // another puzzle in the same page (links, the back button)
+            window.addEventListener("hashchange", function () {
+                if (window.location.hash != "")
+                    DoPuzzle(window.location.hash.substr(1));
+            });
         </script>
     </body>
 </html>

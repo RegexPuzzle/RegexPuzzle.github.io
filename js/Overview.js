@@ -1,50 +1,175 @@
 var deviceType = (navigator.userAgent.match(/iPad/i)) == "iPad" ? "iPad" : (navigator.userAgent.match(/iPhone/i)) == "iPhone" ? "iPhone" : (navigator.userAgent.match(/Android/i)) == "Android" ? "Android" : (navigator.userAgent.match(/BlackBerry/i)) == "BlackBerry" ? "BlackBerry" : "null";
 
 function DoPuzzle(puzzlename) {
-    window.location = "index.html#" + puzzlename;
+    window.location = "index.html?v=23#" + puzzlename; // ?v=: a new version of the scripts, not the cached one
 };
 
-function isArray(obj) {
-    return Object.prototype.toString.call(obj) === "[object Array]";
+function Element(tag, className, text) {
+    var el = document.createElement(tag);
+    if (className)
+        el.className = className;
+    if (text !== undefined)
+        el.textContent = text;
+    return el;
 }
 
-function ProcessFilenames(obj, Panel, headersize) {
+// Difficulty 1-5 of each puzzle within its grid (difficulty.json, the same as "difficulty" in the puzzle files)
+var Difficulty = {};
 
-    if (obj.length) {
-        for (var i = 0; i < obj.length; ++i) {
-            var btn = document.createElement("BUTTON");
-            btn.onclick = function (evt) {
-                DoPuzzle(evt.currentTarget.innerHTML);
-            };
-            var t = document.createTextNode(obj[i]);
-            btn.appendChild(t);
-            if (localStorage[obj[i] + "DONE"] == "true")
-                btn.style.backgroundColor = "green";
-            Panel.appendChild(btn);
-        }
-    } else {
-        for (var type in obj) {
-            var subpanel = document.createElement("DIV");
-            var subpaneltext = document.createElement("H" + headersize);
-            subpaneltext.innerHTML = type + ":";
-            subpanel.appendChild(subpaneltext);
-            Panel.appendChild(subpanel);
-            ProcessFilenames(obj[type], subpanel, headersize + 1);
-        }
+// One card per grid size: its puzzles as numbered buttons (easy to hard, as index.json lists them), coloured by
+// status, with their difficulty as stars under the number
+function Card(title, names) {
+    var card = Element("section", "card");
+    var solved = 0;
+    for (var i = 0; i < names.length; ++i)
+        solved += PuzzleStatus(names[i]) == "solved";
+    var head = Element("div", "card-head");
+    head.appendChild(Element("h3", "", title));
+    head.appendChild(Element("span", "card-count", solved + " of " + names.length + " solved"));
+    card.appendChild(head);
+    var grid = Element("div", "numbers");
+    names.forEach(function (name) {
+        var status = PuzzleStatus(name);
+        var btn = Element("button", "number " + status, PuzzleNumber(name));
+        btn.type = "button";
+        var level = Difficulty[name];
+        btn.setAttribute("aria-label", PrettyName(name) + ", " + status + (level ? ", difficulty " + level + " of 5" : ""));
+        btn.title = PrettyName(name) + (level ? " · difficulty " + level + "/5" : "");
+        if (level)
+            btn.appendChild(Element("span", "stars", Stars(level)));
+        btn.onclick = function () { DoPuzzle(name); };
+        grid.appendChild(btn);
+    });
+    card.appendChild(grid);
+    return card;
+}
+
+// Install as an app: the browser's own prompt where it has one (Chrome, Edge, Samsung Internet), otherwise how to do it
+var installPrompt = null;
+window.addEventListener("beforeinstallprompt", function (evt) {
+    evt.preventDefault();
+    installPrompt = evt;
+    ShowInstall();
+});
+window.addEventListener("appinstalled", function () {
+    installPrompt = null;
+    ShowInstall();
+});
+
+function Installed() {
+    return window.matchMedia("(display-mode: standalone)").matches || navigator.standalone === true;
+}
+
+function ShowInstall() {
+    var box = document.getElementById("Install");
+    if (!box)
+        return;
+    while (box.firstChild)
+        box.removeChild(box.firstChild);
+    var ios = /iPad|iPhone|iPod/.test(navigator.userAgent);
+    if (Installed()) {
+        box.hidden = true;
+        return;
+    }
+    box.hidden = false;
+    if (installPrompt) {
+        var btn = Element("button", "install", "Install as app");
+        btn.type = "button";
+        btn.onclick = function () {
+            installPrompt.prompt();
+            installPrompt.userChoice.then(function () { installPrompt = null; ShowInstall(); });
+        };
+        box.appendChild(btn);
+        box.appendChild(Element("span", "", "Plays full screen and offline."));
+    } else if (ios)
+        box.appendChild(Element("span", "", "Install as app: tap Share, then Add to Home Screen."));
+    else if (!window.isSecureContext)
+        box.appendChild(Element("span", "", "Installing as an app needs a secure (https) address. Use the browser menu's Add to Home screen for a shortcut."));
+    else
+        box.hidden = true; // the browser may offer it later (beforeinstallprompt)
+}
+
+function Render(index) {
+    var root = document.getElementById("Puzzles");
+    while (root.firstChild)
+        root.removeChild(root.firstChild);
+    var header = Element("div", "page-head");
+    header.appendChild(Element("h1", "", "RegEx puzzles"));
+    var gear = Element("button", "settings-button", "⚙");
+    gear.type = "button";
+    gear.title = "Settings";
+    gear.setAttribute("aria-label", "Settings");
+    gear.onclick = function () { ShowSettings(null); };
+    header.appendChild(gear);
+    root.appendChild(header);
+    var install = Element("div", "install-box");
+    install.id = "Install";
+    install.hidden = true;
+    root.appendChild(install);
+    ShowInstall();
+
+    var last = Load("LastPuzzle");
+    if (last) {
+        var cont = Element("button", "continue");
+        cont.type = "button";
+        cont.appendChild(Element("span", "", (PuzzleStatus(last) == "solved" ? "Again: " : "Continue: ") + PrettyName(last)));
+        cont.appendChild(Element("span", "", "▶"));
+        cont.onclick = function () { DoPuzzle(last); };
+        root.appendChild(cont);
+    }
+
+    var legend = Element("p", "legend");
+    [["solved", "Solved"], ["started", "Started"], ["new", "New"]].forEach(function (s) {
+        var item = Element("span", "");
+        item.appendChild(Element("i", "swatch " + s[0]));
+        item.appendChild(document.createTextNode(s[1]));
+        legend.appendChild(item);
+    });
+    var scale = Element("span", "");
+    scale.appendChild(Element("i", "stars", "★★★"));
+    scale.appendChild(document.createTextNode("Difficulty in its grid (1–5 stars)"));
+    legend.appendChild(scale);
+    root.appendChild(legend);
+
+    for (var group in index) {
+        var section = Element("div", "group");
+        if (!Array.isArray(index[group])) // a single card (Tutorial) is its own heading
+            section.appendChild(Element("h2", "", group));
+        var cards = Element("div", "cards");
+        if (Array.isArray(index[group]))
+            cards.appendChild(Card(group, index[group]));
+        else
+            for (var grid in index[group])
+                cards.appendChild(Card(grid, index[group][grid]));
+        section.appendChild(cards);
+        root.appendChild(section);
     }
 }
 
-var xmlhttp = new XMLHttpRequest();
-var url = "FileNames.txt";
-if (deviceType == "Android")
-    url = "file:///android_asset/www/" + url;
-
-xmlhttp.onreadystatechange = function () {
-    if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-        var myArr = JSON.parse(xmlhttp.responseText);
-        ProcessFilenames(myArr, document.getElementById("Puzzles"), 2);
-    }
+// index.json, and difficulty.json (optional: without it the buttons have no stars)
+function Fetch(file, done) {
+    var xhr = new XMLHttpRequest();
+    var url = "puzzles/" + file;
+    if (deviceType == "Android" && location.protocol == "file:") // inside the Cordova app
+        url = "file:///android_asset/www/" + url;
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState != 4)
+            return;
+        var data = null;
+        try {
+            data = xhr.status == 200 ? JSON.parse(xhr.responseText) : null;
+        } catch (e) {
+        }
+        done(data);
+    };
+    xhr.open("GET", url, true);
+    xhr.send();
 }
-xmlhttp.open("GET", url, true);
-xmlhttp.send();
 
+Fetch("difficulty.json", function (levels) {
+    Difficulty = levels || {};
+    Fetch("index.json", function (index) {
+        if (index)
+            Render(index);
+    });
+});

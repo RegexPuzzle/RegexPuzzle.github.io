@@ -20,22 +20,92 @@
     -webkit-tap-highlight-color: rgba(0,0,0,0); /* make transparent link selection, adjust last value opacity 0 to 1.0 */
 }
 
+/* Colours: light, and dark when the phone or computer is set to dark */
+:root {
+    --bg-top: #A7A7A7;
+    --bg-bottom: #E4E4E4;
+    --ink: #111111;
+    --muted: #4a4a4a;
+    --btn: #f0f0f0;
+    --btn-line: #767676;
+    --btn-on: #0f6e78;
+    --cell: #ffffff;
+    --cell-line: #111111;
+    --cell-multi: #707070;
+    --selected: #ffff00;
+    --ok: #1a7f37;
+    --wrong: #b00020;
+    --wrong-cell: #ffaaaa;
+    --mark: #dcefef;
+    --mark-line: #0f6e78;
+    --hint-good: #b9e4c1;
+    --hint-bad: #f6b39c;
+    --step: #6d28d9; /* the next solving step (Hint) */
+    --step-bg: #ede9fe;
+    --pad: rgba(255, 255, 255, 0.55);
+    --pad-line: rgba(0, 0, 0, 0.15);
+    --card: #ffffff;
+    --solved: #2e8b45;
+    --started: #e2a400;
+    --new: #d8d8d8;
+    /* a group that a backreference uses, and its backreferences */
+    --g1: #c2410c;
+    --g2: #6d28d9;
+    --g3: #0369a1;
+    --g4: #a21caf;
+    --g5: #4d7c0f;
+    --wave: #8fd19e;
+    --star: #b7791f;
+    color-scheme: light;
+}
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        --bg-top: #1b1f25;
+        --bg-bottom: #2a2f37;
+        --ink: #e8eaed;
+        --muted: #a9b0bb;
+        --btn: #3a4049;
+        --btn-line: #5d6571;
+        --btn-on: #5cc2cc;
+        --cell: #15181d;
+        --cell-line: #9aa3af;
+        --cell-multi: #a9b0bb;
+        --selected: #6a5a00;
+        --ok: #5cd27a;
+        --wrong: #ff6b7f;
+        --wrong-cell: #5a1f28;
+        --mark: #173538;
+        --mark-line: #5cc2cc;
+        --hint-good: #1f4d2b;
+        --hint-bad: #6b2c1f;
+        --step: #b9a3ff;
+        --step-bg: #2e2552;
+        --pad: rgba(0, 0, 0, 0.35);
+        --pad-line: rgba(255, 255, 255, 0.12);
+        --card: #20252c;
+        --solved: #3fa65a;
+        --started: #c99300;
+        --new: #3a4049;
+        --g1: #fb923c;
+        --g2: #c4b5fd;
+        --g3: #7dd3fc;
+        --g4: #f0abfc;
+        --g5: #bef264;
+        --wave: #2f7a45;
+        --star: #f2c14e;
+        color-scheme: dark;
+    }
+}
+
 body {
     -webkit-touch-callout: none;                /* prevent callout to copy image, etc when tap to hold */
     -webkit-text-size-adjust: none;             /* prevent webkit from resizing text to fit */
     -webkit-user-select: none;                  /* prevent copy paste, to allow, change 'none' to 'text' */
-    background-color:#E4E4E4;
-    background-image:linear-gradient(top, #A7A7A7 0%, #E4E4E4 51%);
-    background-image:-webkit-linear-gradient(top, #A7A7A7 0%, #E4E4E4 51%);
-    background-image:-ms-linear-gradient(top, #A7A7A7 0%, #E4E4E4 51%);
-    background-image:-webkit-gradient(
-        linear,
-        left top,
-        left bottom,
-        color-stop(0, #A7A7A7),
-        color-stop(0.51, #E4E4E4)
-    );
-    background-attachment:fixed;
+    background-color: var(--bg-bottom);
+    background-image: linear-gradient(to bottom, var(--bg-top) 0%, var(--bg-bottom) 51%);
+    background-attachment: fixed;
+    color: var(--ink);
     font-family:'Lucida Console', Helvetica, Arial, sans-serif;
     font-size:12px;
     height:100%;
@@ -112,4 +182,766 @@ h1 {
 .blink {
     animation:fade 3000ms infinite;
     -webkit-animation:fade 3000ms infinite;
+}
+
+/* Puzzle page (index.html) */
+.app {
+    position: static;
+    height: auto;
+}
+
+.toolbar {
+    display: flex;
+    flex-wrap: nowrap; /* one row: on a phone the buttons get narrower instead */
+    justify-content: center;
+    align-items: center;
+    gap: 4px;
+    padding: 4px;
+}
+
+button {
+    background: var(--btn);
+    color: var(--ink);
+    border: 1px solid var(--btn-line);
+    border-radius: 4px;
+}
+
+button:focus-visible {
+    outline: 2px solid var(--btn-on);
+    outline-offset: 1px;
+}
+
+.toolbar button {
+    min-width: 2.4em;
+    min-height: 2.2em;
+    font: inherit;
+}
+
+/* toolbar buttons: a symbol with a short label under it */
+.toolbar button.tool {
+    display: inline-grid;
+    justify-items: center;
+    align-items: center;
+    gap: 1px;
+    flex: 0 1 3.4em;
+    min-width: 0;
+    padding: 3px 1px;
+    font-size: 15px;
+    line-height: 1.1;
+}
+
+.toolbar button.tool[hidden] {
+    display: none;
+}
+
+.toolbar button.tool svg {
+    display: block;
+}
+
+.toolbar button.tool small {
+    font-size: 9px;
+    text-transform: none;
+}
+
+.toolbar button.on {
+    border-color: var(--btn-on);
+    box-shadow: 0 0 0 2px var(--btn-on);
+}
+
+/* name and progress of the puzzle */
+.status {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 4px 10px;
+    padding: 0 8px 2px;
+    text-transform: none;
+}
+
+#PuzzleName {
+    background-color: var(--cell);
+    padding: 2px 8px;
+}
+
+.progress {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 11px;
+    color: var(--muted);
+}
+
+.progress .bar {
+    width: 70px;
+    height: 6px;
+    border-radius: 3px;
+    background: var(--pad-line);
+    overflow: hidden;
+}
+
+.progress .bar i {
+    display: block;
+    height: 100%;
+    width: 0;
+    background: var(--ok);
+}
+
+/* a letter being dragged from the pad */
+#DragLetter {
+    position: fixed;
+    transform: translate(-50%, -50%);
+    min-width: 44px;
+    padding: 6px 10px;
+    border-radius: 10px;
+    background: var(--btn-on);
+    color: #ffffff;
+    font-size: 26px;
+    text-align: center;
+    pointer-events: none;
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
+    z-index: 3;
+}
+
+/* the message when the last line matches */
+#Solved {
+    position: fixed;
+    left: 50%;
+    top: 38%;
+    transform: translate(-50%, -50%);
+    background: var(--solved);
+    color: #ffffff;
+    border-radius: 14px;
+    padding: 16px 28px;
+    text-align: center;
+    text-transform: none;
+    font-size: 14px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+    z-index: 2;
+}
+
+#Solved b {
+    display: block;
+    font-size: 22px;
+}
+
+#Solved .facts {
+    display: block;
+    margin-top: 4px;
+    font-size: 18px;
+    font-variant-numeric: tabular-nums;
+}
+
+#Solved .actions {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 14px;
+}
+
+#Solved button {
+    min-height: 44px;
+    padding: 6px 14px;
+    font: inherit;
+    font-size: 15px;
+    border-radius: 10px;
+    border: 0;
+    background: rgba(255, 255, 255, 0.2);
+    color: #ffffff;
+    white-space: nowrap;
+}
+
+#Solved button.next {
+    background: #ffffff;
+    color: var(--solved);
+    font-weight: bold;
+}
+
+#Hint {
+    max-width: 40em;
+    margin: 4px auto;
+    text-transform: none;
+}
+
+#Message {
+    min-height: 1.4em;
+    font-size: 16px;
+}
+
+#Message.done {
+    color: var(--ok);
+    font-weight: bold;
+}
+
+#Message.wrong {
+    color: var(--wrong);
+}
+
+#SVG {
+    display: block;
+    margin: 0;
+    width: calc(100% - 44px); /* the rotation slider is at the right */
+    height: 70vh; /* set by SizeSvg: the height left below the toolbars */
+    min-width: 240px;
+    touch-action: none; /* dragging over cells selects them, pinching zooms the board instead of the page */
+    text-transform: none;
+}
+
+/* the letters: a bar fixed at the bottom, within reach of a thumb, in even rows (SetLetterPad) */
+.letterpad {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: grid;
+    gap: 6px;
+    padding: 8px 8px calc(8px + env(safe-area-inset-bottom, 0px));
+    background: var(--pad);
+    border-top: 1px solid var(--pad-line);
+    z-index: 1;
+}
+
+.letterpad button {
+    touch-action: none; /* a key can be dragged onto a cell */
+    min-height: 44px;
+    font: inherit;
+    font-size: 20px;
+    border-radius: 6px;
+}
+
+/* the rotation slider: a column at the right of the board (PlaceRotateSlider sets its top and height) */
+.rotate {
+    position: fixed;
+    right: 0;
+    top: 100px;
+    width: 44px;
+    height: 300px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    padding-bottom: 4px;
+    box-sizing: border-box;
+    z-index: 1;
+}
+
+body.side-pad .rotate {
+    right: var(--pad-width, 140px);
+}
+
+/* not a level that fills up: a thin track with a mark at 0 (the middle) and smaller ones at -90 and +90 */
+#RotateSlider {
+    writing-mode: vertical-lr;
+    direction: rtl; /* the lowest value at the bottom */
+    -webkit-appearance: none;
+    appearance: none;
+    flex: 1;
+    min-height: 0;
+    width: 30px;
+    margin: 0;
+    touch-action: none;
+    background:
+        linear-gradient(var(--ink), var(--ink)) center 50% / 18px 2px no-repeat,
+        linear-gradient(var(--muted), var(--muted)) center 25% / 12px 2px no-repeat,
+        linear-gradient(var(--muted), var(--muted)) center 75% / 12px 2px no-repeat,
+        linear-gradient(var(--btn-line), var(--btn-line)) center / 4px calc(100% - 26px) no-repeat;
+}
+
+#RotateSlider::-webkit-slider-runnable-track {
+    background: transparent;
+}
+
+#RotateSlider::-moz-range-track {
+    background: transparent;
+}
+
+#RotateSlider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    background: var(--btn-on);
+    border: 2px solid var(--cell);
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.35);
+}
+
+#RotateSlider::-moz-range-thumb {
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: var(--btn-on);
+    border: 2px solid var(--cell);
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.35);
+}
+
+#RotateSlider:focus {
+    outline: none;
+}
+
+#RotateSlider:focus-visible::-webkit-slider-thumb {
+    outline: 3px solid var(--mark-line);
+    outline-offset: 1px;
+}
+
+#RotateValue {
+    min-width: 40px;
+    min-height: 28px;
+    padding: 0 2px;
+    font: inherit;
+    font-size: 11px;
+    font-variant-numeric: tabular-nums;
+    text-transform: none;
+    border-radius: 6px;
+}
+
+/* a phone held sideways: the letters are a column at the right (SetLetterPad), the board uses the full height */
+body.side-pad .letterpad {
+    top: 0;
+    left: auto;
+    width: var(--pad-width, 140px);
+    box-sizing: border-box;
+    align-content: center;
+    padding: 8px calc(8px + env(safe-area-inset-right, 0px)) 8px 8px;
+    border-top: 0;
+    border-left: 1px solid var(--pad-line);
+}
+
+body.side-pad .app {
+    width: auto;
+    margin-left: calc(64px + env(safe-area-inset-left, 0px));
+    margin-right: var(--pad-width, 140px);
+}
+
+/* ... and the tools are a column at the left, so only the name and progress are above the board */
+body.side-pad .toolbar {
+    position: fixed;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: calc(64px + env(safe-area-inset-left, 0px));
+    box-sizing: border-box;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    justify-content: center;
+    padding: 4px 4px 4px calc(4px + env(safe-area-inset-left, 0px));
+    background: var(--pad);
+    border-right: 1px solid var(--pad-line);
+    z-index: 1;
+}
+
+body.side-pad .toolbar button.tool {
+    flex: none;
+    width: 54px;
+    padding: 1px;
+    gap: 0;
+    line-height: 1;
+}
+
+body.side-pad .toolbar {
+    gap: 3px;
+}
+
+@media (max-height: 330px) { /* too low for one column of nine: two columns */
+    body.side-pad .toolbar {
+        flex-wrap: wrap;
+        align-content: center;
+        width: calc(120px + env(safe-area-inset-left, 0px));
+    }
+    body.side-pad .app {
+        margin-left: calc(120px + env(safe-area-inset-left, 0px));
+    }
+    body.side-pad #Message {
+        left: calc(120px + env(safe-area-inset-left, 0px));
+    }
+}
+
+/* the message floats over the bottom of the board instead of taking a row */
+body.side-pad #Message {
+    position: fixed;
+    left: calc(64px + env(safe-area-inset-left, 0px));
+    right: var(--pad-width, 140px);
+    bottom: 6px;
+    min-height: 0;
+    pointer-events: none;
+    z-index: 1;
+}
+
+#SVG .regexbg {
+    display: none;
+    fill: var(--mark);
+    stroke: var(--mark-line);
+}
+
+#SVG text {
+    fill: var(--ink);
+}
+
+#SVG text.multi {
+    fill: var(--cell-multi);
+}
+
+#SVG .regexbg.active {
+    display: inline;
+}
+
+/* the next solving step: its regexes and its cell */
+#SVG .regexbg[data-step] {
+    display: inline;
+    fill: var(--step-bg);
+    stroke: var(--step);
+    stroke-width: 1.5;
+}
+
+#SVG .regex[data-step] {
+    font-weight: bold;
+}
+
+#SVG .regex.active {
+    font-weight: bold;
+}
+
+#SVG .cell {
+    fill: var(--cell);
+    stroke: var(--cell-line);
+}
+
+/* hint mode: right and wrong letters (the selection still shows on top) */
+#SVG .cell[data-hint="good"] {
+    fill: var(--hint-good);
+}
+
+#SVG .cell[data-hint="bad"] {
+    fill: var(--hint-bad);
+    stroke-dasharray: 4 2; /* not only a colour difference */
+}
+
+/* the cell a dragged letter would land on */
+#SVG .cell[data-drop] {
+    stroke: var(--btn-on);
+    stroke-width: 4;
+}
+
+#SVG .cell[data-step] {
+    stroke: var(--step);
+    stroke-width: 4;
+    stroke-dasharray: none;
+}
+
+#SVG .cell.selected {
+    fill: var(--selected);
+}
+
+#SVG .cell.wrong {
+    fill: var(--wrong-cell);
+    stroke: var(--wrong);
+    stroke-width: 3;
+    stroke-dasharray: 4 2; /* not only a colour difference */
+}
+
+#SVG .cell:focus {
+    outline: none;
+}
+
+#SVG .regex.ok {
+    fill: var(--ok);
+}
+
+#SVG .regex.wrong {
+    fill: var(--wrong);
+    font-weight: bold;
+}
+
+/* a matching line steps back, so the open ones stand out (unless it is a line of the selected cell) */
+#SVG .regex.ok:not(.active) {
+    opacity: 0.6;
+}
+
+/* groups that a backreference uses, and those backreferences, in the same colour */
+#SVG .regex tspan.group {
+    font-weight: bold;
+}
+#SVG .regex tspan.g1 { fill: var(--g1); }
+#SVG .regex tspan.g2 { fill: var(--g2); }
+#SVG .regex tspan.g3 { fill: var(--g3); }
+#SVG .regex tspan.g4 { fill: var(--g4); }
+#SVG .regex tspan.g5 { fill: var(--g5); }
+
+/* a line that just became wrong */
+@keyframes flash {
+    0%, 50%, 100% { opacity: 1; }
+    25%, 75% { opacity: 0.15; }
+}
+#SVG .regex.flash {
+    animation: flash 700ms ease-in-out;
+}
+
+/* solved: a wave of colour across the cells */
+@keyframes wave {
+    0%, 100% { fill: var(--cell); }
+    40% { fill: var(--wave); }
+}
+#SVG .cell[data-wave] {
+    animation: wave 700ms ease-in-out both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    #SVG .regex.flash, #SVG .cell[data-wave] {
+        animation: none;
+    }
+}
+
+
+/* Settings: a gear button on both pages opens one panel (ShowSettings in names.js) */
+.settings-button {
+    min-width: 36px;
+    min-height: 32px;
+    padding: 0 6px;
+    font: inherit;
+    font-size: 20px;
+    line-height: 1;
+    border-radius: 8px;
+}
+
+/* the full screen button shows corners pointing out, or in while in full screen */
+#FullScreenButton .leave,
+#FullScreenButton[aria-pressed="true"] .enter {
+    display: none;
+}
+
+#FullScreenButton[aria-pressed="true"] .leave {
+    display: inline;
+}
+
+#Settings {
+    box-sizing: border-box;
+    max-width: min(420px, calc(100vw - 32px));
+    padding: 16px 18px;
+    border: 0;
+    border-radius: 14px;
+    background: var(--card);
+    color: var(--ink);
+    text-align: left;
+    text-transform: none;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+}
+
+#Settings::backdrop {
+    background: rgba(0, 0, 0, 0.35);
+}
+
+#Settings h2 {
+    margin: 0 0 12px;
+    font-size: 18px;
+}
+
+#Settings .setting {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 6px 0;
+    font-size: 15px;
+    cursor: pointer;
+}
+
+#Settings .setting input {
+    width: 20px;
+    height: 20px;
+    margin: 1px 0 0;
+    accent-color: var(--btn-on);
+    flex: none;
+}
+
+#Settings .setting small {
+    display: block;
+    margin-top: 2px;
+    font-size: 12px;
+    color: var(--muted);
+}
+
+#Settings .close {
+    display: block;
+    margin: 14px 0 0 auto;
+    min-height: 40px;
+    padding: 6px 18px;
+    font: inherit;
+    font-size: 15px;
+    border-radius: 10px;
+}
+
+.page-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 8px;
+}
+
+/* Overview (Overview.html): a card per grid size with its puzzles as numbered buttons */
+#Puzzles {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 12px 16px 32px;
+    text-transform: none;
+    display: grid;
+    gap: 12px;
+}
+
+#Puzzles h1 {
+    font-size: 22px;
+    text-align: left;
+}
+
+#Puzzles h2 {
+    font-size: 15px;
+    margin: 8px 0 6px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--muted);
+}
+
+.continue {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 8px;
+    width: 100%;
+    min-height: 48px;
+    padding: 8px 14px;
+    font: inherit;
+    font-size: 15px;
+    color: #ffffff;
+    background: var(--btn-on);
+    border: 0;
+    border-radius: 10px;
+}
+
+.install-box {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 6px 12px;
+    color: var(--muted);
+}
+
+.install-box[hidden] {
+    display: none;
+}
+
+.install {
+    min-height: 44px;
+    padding: 6px 16px;
+    font: inherit;
+    font-size: 15px;
+    border-radius: 10px;
+    border: 2px solid var(--btn-on);
+}
+
+.legend {
+    display: flex;
+    gap: 14px;
+    margin: 0;
+    color: var(--muted);
+}
+
+.legend span {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.swatch {
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    border-radius: 3px;
+}
+
+.cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 330px), 1fr));
+    gap: 10px;
+}
+
+.card {
+    background: var(--card);
+    border-radius: 10px;
+    padding: 10px 12px;
+    display: grid;
+    gap: 8px;
+}
+
+.card-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 8px;
+}
+
+.card h3 {
+    margin: 0;
+    font-size: 16px;
+}
+
+.card-count {
+    color: var(--muted);
+    font-size: 12px;
+}
+
+.numbers {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(40px, 1fr));
+    gap: 6px;
+}
+
+.number {
+    position: relative;
+    min-height: 40px;
+    font: inherit;
+    font-size: 14px;
+    border-radius: 6px;
+}
+
+/* difficulty 1-5 within its grid ("difficulty" in the puzzle) as stars: under the number on the overview, next to
+   the name on the puzzle page */
+.stars {
+    font-style: normal;
+    color: var(--star);
+    letter-spacing: -0.5px;
+    white-space: nowrap;
+}
+
+.number {
+    display: inline-grid;
+    place-content: center;
+    gap: 1px;
+    line-height: 1.1;
+}
+
+.number .stars {
+    font-size: 8px;
+    line-height: 1;
+}
+
+.number.solved .stars,
+.number.started .stars {
+    color: inherit;
+}
+
+#PuzzleStars {
+    font-size: 14px;
+}
+
+.number.solved, .swatch.solved {
+    background: var(--solved);
+    border-color: var(--solved);
+    color: #ffffff;
+}
+
+.number.started, .swatch.started {
+    background: var(--started);
+    border-color: var(--started);
+    color: #111111;
+}
+
+.swatch.new {
+    background: var(--new);
 }

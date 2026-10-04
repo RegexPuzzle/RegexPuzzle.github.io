@@ -54,9 +54,10 @@ localStorage["version"] = 3;
 var deviceType = (navigator.userAgent.match(/iPad/i)) == "iPad" ? "iPad" : (navigator.userAgent.match(/iPhone/i)) == "iPhone" ? "iPhone" : (navigator.userAgent.match(/Android/i)) == "Android" ? "Android" : (navigator.userAgent.match(/BlackBerry/i)) == "BlackBerry" ? "BlackBerry" : "null";
 
 function DoPuzzle(puzzlename) {
+    Save("LastPuzzle", puzzlename); // for Continue on the overview
     var xmlhttp = new XMLHttpRequest();
-    var url = "puzzles/" + puzzlename + ".txt";
-    if (deviceType == "Android")
+    var url = "puzzles/" + puzzlename + ".json";
+    if (deviceType == "Android" && location.protocol == "file:") // inside the Cordova app
         url = "file:///android_asset/www/" + url;
 
     xmlhttp.onreadystatechange = function () {
@@ -70,8 +71,8 @@ function DoPuzzle(puzzlename) {
 };
 
 function gotomain() {
-    window.location = "Overview.html";
     if (puzzlename && !localStorage[puzzlename + "DONE"])
-        testField(false);
+        testField(false); // remembers a finished puzzle, before leaving the page
+    window.location = "Overview.html?v=23"; // ?v=: a new version of the scripts, not the cached one
 }
 app.initialize();
