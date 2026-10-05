@@ -43,8 +43,15 @@ function Save(key, value) {
 
 // Settings: stored as SETTING<key> = "true"/"false", shown in one panel (ShowSettings) on the overview and the puzzle page
 var SETTINGS = [
-    { key: "ColorGroups", label: "Colour groups and their backreferences", note: "(.)..\\1: the group and the \\1 that repeats it share a colour", def: false }
+    { key: "ColorGroups", label: "Colour groups and their backreferences", note: "(.)..\\1: the group and the \\1 that repeats it share a colour", def: false },
+    { key: "AlwaysDark", label: "Always dark", note: "Dark colours also when the phone or computer is set to light", def: false },
+    { key: "DarkReaderLock", label: "Keep Dark Reader off this site", note: "The site has its own dark colours. Takes effect when the page loads again.", def: true }
 ];
+
+// Always dark at once (the head of each page applies both settings when it loads)
+function ApplyAppearance() {
+    document.documentElement.classList.toggle("dark", Setting("AlwaysDark"));
+}
 
 function Setting(key) {
     var value = Load("SETTING" + key);
@@ -72,6 +79,7 @@ function ShowSettings(onChange) {
             box.id = "SETTING" + s.key;
             box.onchange = function () {
                 Save("SETTING" + s.key, box.checked ? "true" : "false");
+                ApplyAppearance();
                 if (panel.onChange)
                     panel.onChange(s.key, box.checked);
             };

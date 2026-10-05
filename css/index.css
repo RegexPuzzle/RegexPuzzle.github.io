@@ -98,6 +98,44 @@
     }
 }
 
+/* the same dark colours when the setting Always dark is on (Appearance in names.js sets the class) */
+:root.dark {
+    --bg-top: #1b1f25;
+    --bg-bottom: #2a2f37;
+    --ink: #e8eaed;
+    --muted: #a9b0bb;
+    --btn: #3a4049;
+    --btn-line: #5d6571;
+    --btn-on: #5cc2cc;
+    --cell: #15181d;
+    --cell-line: #9aa3af;
+    --cell-multi: #a9b0bb;
+    --selected: #6a5a00;
+    --ok: #5cd27a;
+    --wrong: #ff6b7f;
+    --wrong-cell: #5a1f28;
+    --mark: #173538;
+    --mark-line: #5cc2cc;
+    --hint-good: #1f4d2b;
+    --hint-bad: #6b2c1f;
+    --step: #b9a3ff;
+    --step-bg: #2e2552;
+    --pad: rgba(0, 0, 0, 0.35);
+    --pad-line: rgba(255, 255, 255, 0.12);
+    --card: #20252c;
+    --solved: #3fa65a;
+    --started: #c99300;
+    --new: #3a4049;
+    --g1: #fb923c;
+    --g2: #c4b5fd;
+    --g3: #7dd3fc;
+    --g4: #f0abfc;
+    --g5: #bef264;
+    --wave: #2f7a45;
+    --star: #f2c14e;
+    color-scheme: dark;
+}
+
 body {
     -webkit-touch-callout: none;                /* prevent callout to copy image, etc when tap to hold */
     -webkit-text-size-adjust: none;             /* prevent webkit from resizing text to fit */

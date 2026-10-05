@@ -24,7 +24,28 @@
         <meta name="msapplication-tap-highlight" content="no" />
         <!-- WARNING: for iOS 7, remove the width=device-width and height=device-height attributes. See https://issues.apache.org/jira/browse/CB-4323 -->
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <link rel="stylesheet" type="text/css" href="css/index.css?v=26" />
+        <script>
+            // Appearance from the settings (names.js), before the page is drawn: "Always dark" (default off) and
+            // "Keep Dark Reader off this site" (default on: Dark Reader only reads this when the page loads)
+            (function () {
+                function On(key, def) {
+                    try {
+                        var v = localStorage["SETTING" + key];
+                        return v === undefined || v === null ? def : v == "true";
+                    } catch (e) {
+                        return def;
+                    }
+                }
+                if (On("AlwaysDark", false))
+                    document.documentElement.className += " dark";
+                if (On("DarkReaderLock", true)) {
+                    var lock = document.createElement("meta");
+                    lock.name = "darkreader-lock";
+                    document.head.appendChild(lock);
+                }
+            })();
+        </script>
+        <link rel="stylesheet" type="text/css" href="css/index.css?v=27" />
         <link rel="manifest" href="manifest.webmanifest" />
         <meta name="theme-color" content="#0f6e78" />
         <link rel="apple-touch-icon" href="icons/icon-192.png" />
@@ -60,9 +81,9 @@
 
         </div>
 
-        <script src="js/names.js?v=26"></script>
-        <script type="text/javascript" src="js/index.js?v=26"></script>
-        <script src="js/StartPuzzle.js?v=26"></script>
+        <script src="js/names.js?v=27"></script>
+        <script type="text/javascript" src="js/index.js?v=27"></script>
+        <script src="js/StartPuzzle.js?v=27"></script>
         <script>
             /*
             function getQueryParams(qs) {
