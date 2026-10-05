@@ -1,0 +1,33 @@
+{
+"Alphabet":["G","H","J","A","B","L","K","C","D","E","F","M"],
+"field": {
+"00": "H",
+"01": "J",
+"02": "A",
+"10": "G",
+"11": "C",
+"12": "A",
+"20": "D",
+"21": "D",
+"22": "A"}, 
+"regexes":[
+ {"positions":["00","10","20"], "regex": "[GH]*."},
+ {"positions":["01","11","21"], "regex": ".*J.*"},
+ {"positions":["02","12","22"], "regex": "[ABLK]*A"},
+ {"positions":["00","01","02"], "regex": "[HJ]*A*"},
+ {"positions":["10","11","12"], "regex": "G*CA*"},
+ {"positions":["20","21","22"], "regex": "D{2}.*"}],
+"steps":[
+ {"cell":"22", "lines":[2]},
+ {"cell":"20", "lines":[5]},
+ {"cell":"21", "lines":[5]},
+ {"cell":"00", "lines":[0,3]},
+ {"cell":"10", "lines":[0,4]},
+ {"cell":"01", "lines":[1,4]},
+ {"cell":"02", "lines":[2,3]},
+ {"cell":"12", "lines":[2,4]},
+ {"cell":"11", "lines":[4]}],
+"grade": {"medium":5, "depth":7},
+"extra": true,
+"difficulty": 6,
+"id": "a4952068c6b12296"}

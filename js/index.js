@@ -48,9 +48,6 @@ var app = {
     }
 };
 
-if (localStorage["version"] != 3)
-    localStorage.clear();
-localStorage["version"] = 3;
 var deviceType = (navigator.userAgent.match(/iPad/i)) == "iPad" ? "iPad" : (navigator.userAgent.match(/iPhone/i)) == "iPhone" ? "iPhone" : (navigator.userAgent.match(/Android/i)) == "Android" ? "Android" : (navigator.userAgent.match(/BlackBerry/i)) == "BlackBerry" ? "BlackBerry" : "null";
 
 function DoPuzzle(puzzlename) {
@@ -71,8 +68,8 @@ function DoPuzzle(puzzlename) {
 };
 
 function gotomain() {
-    if (puzzlename && !localStorage[puzzlename + "DONE"])
+    if (puzzlename && !localStorage[progressKey + "DONE"])
         testField(false); // remembers a finished puzzle, before leaving the page
-    window.location = "Overview.html?v=27"; // ?v=: a new version of the scripts, not the cached one
+    window.location = "Overview.html?v=29"; // ?v=: a new version of the scripts, not the cached one
 }
 app.initialize();

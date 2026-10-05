@@ -1,7 +1,7 @@
 {
 "level": "Groups",
-"title": "Echo",
-"hint": "(.) remembers the letter it matches, and \\1 must be that same letter again: (.)B\\1 is ABA, BBB or CBC.",
+"title": "What the bar splits",
+"hint": "The bar splits everything between the nearest parentheses: (AB|C) is AB or C, but A(B|C) is an A followed by B or C. Compare the first two rows.",
 "Alphabet": [
 "A",
 "B",
@@ -10,12 +10,12 @@
 "field": {
 "00": "A",
 "01": "B",
-"02": "A",
+"02": "B",
 "10": "C",
-"11": "C",
-"12": "B",
-"20": "B",
-"21": "A",
+"11": "A",
+"12": "A",
+"20": "A",
+"21": "C",
 "22": "B"
 },
 "regexes": [
@@ -25,7 +25,7 @@
 "01",
 "02"
 ],
-"regex": "(.)B\\1"
+"regex": "A(B|C)B"
 },
 {
 "positions": [
@@ -33,7 +33,7 @@
 "11",
 "12"
 ],
-"regex": "(.)\\1B"
+"regex": "(AB|C)A+"
 },
 {
 "positions": [
@@ -41,7 +41,7 @@
 "21",
 "22"
 ],
-"regex": "(.).\\1"
+"regex": "A(B|C)."
 },
 {
 "positions": [
@@ -49,7 +49,7 @@
 "10",
 "20"
 ],
-"regex": "AC+B"
+"regex": "(AC|B)A"
 },
 {
 "positions": [
@@ -57,7 +57,7 @@
 "11",
 "21"
 ],
-"regex": "B[^B]A"
+"regex": "B(A|B)C"
 },
 {
 "positions": [
@@ -65,17 +65,18 @@
 "12",
 "22"
 ],
-"regex": "A(.)\\1"
+"regex": "B(A|B)B"
 }
 ],
 "steps":[
- {"cell":"01", "lines":[0]},
+ {"cell":"00", "lines":[0]},
+ {"cell":"02", "lines":[0]},
  {"cell":"12", "lines":[1]},
- {"cell":"00", "lines":[3]},
+ {"cell":"20", "lines":[2]},
  {"cell":"10", "lines":[3]},
- {"cell":"20", "lines":[3]},
+ {"cell":"01", "lines":[4]},
  {"cell":"21", "lines":[4]},
- {"cell":"02", "lines":[5]},
- {"cell":"11", "lines":[1]},
- {"cell":"22", "lines":[2]}],
-"grade": {"medium":0, "depth":2}}
+ {"cell":"22", "lines":[5]},
+ {"cell":"11", "lines":[1]}],
+"grade": {"medium":0, "depth":2},
+"id": "a7675c026f070a31"}

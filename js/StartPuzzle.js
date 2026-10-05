@@ -7,6 +7,7 @@ var Field = {};
 var FieldRegexes = {};
 var Alphabet = [];
 var puzzlename = undefined;
+var progressKey = undefined; // where its progress is saved: the puzzle's id (ProgressKey in names.js)
 
 var nextisor = false;
 
@@ -270,8 +271,8 @@ function UpdateProgress(ok, total) {
 
 // Time spent on a puzzle (<name>TIME, seconds): counts while the page is visible, until the puzzle is solved
 setInterval(function () {
-    if (puzzlename && document.visibilityState == "visible" && Load(puzzlename + "DONE") != "true")
-        Save(puzzlename + "TIME", Number(Load(puzzlename + "TIME") || 0) + 1);
+    if (puzzlename && document.visibilityState == "visible" && Load(progressKey + "DONE") != "true")
+        Save(progressKey + "TIME", Number(Load(progressKey + "TIME") || 0) + 1);
 }, 1000);
 
 function Duration(seconds) {
@@ -281,6 +282,10 @@ function Duration(seconds) {
 
 // The puzzle after this one in the overview's order that is not solved yet (callback gets null when all are)
 function NextPuzzle(callback) {
+    LoadPuzzleIds(function () { NextPuzzleFromIndex(callback); });
+}
+
+function NextPuzzleFromIndex(callback) {
     var xhr = new XMLHttpRequest();
     xhr.onreadystatechange = function () {
         if (xhr.readyState != 4)
@@ -325,14 +330,14 @@ function Wave() {
 
 // Every line matches: with a unique solution that is the solution
 function Solved() {
-    Save(puzzlename + "DONE", true);
+    Save(progressKey + "DONE", true);
     SetMessage("Solved", "done");
     if (!announceSolved)
         return;
     announceSolved = false;
     SelectCell(null, false);
     Wave();
-    var hints = Number(Load(puzzlename + "HINTS") || 0), time = Number(Load(puzzlename + "TIME") || 0);
+    var hints = Number(Load(progressKey + "HINTS") || 0), time = Number(Load(progressKey + "TIME") || 0);
     var box = document.getElementById("Solved");
     box.innerHTML = "";
     var title = document.createElement("b");
@@ -389,7 +394,7 @@ var stepHint = null; // null, "pending" (wait for the wrong letters to be fixed)
 function ToggleHints() {
     hintMode = !hintMode;
     if (hintMode)
-        Save(puzzlename + "HINTS", Number(Load(puzzlename + "HINTS") || 0) + 1);
+        Save(progressKey + "HINTS", Number(Load(progressKey + "HINTS") || 0) + 1);
     stepHint = hintMode && Steps.length ? "pending" : null;
     var button = document.getElementById("HintButton");
     button.className = "tool" + (hintMode ? " on" : "");
@@ -448,7 +453,7 @@ function ShowHints() {
         stepHint = null; // done: Hint again for the next one
     MarkStep(hintMode ? stepHint : null);
     if (hintMode) {
-        var hints = Number(Load(puzzlename + "HINTS") || 0), text;
+        var hints = Number(Load(progressKey + "HINTS") || 0), text;
         if (wrong)
             text = wrong + (wrong == 1 ? " letter is wrong" : " letters are wrong");
         else if (stepHint && typeof stepHint == "object")
@@ -466,13 +471,13 @@ var restoringView = false;
 function SaveView() {
     if (!puzzlename || restoringView || !View)
         return;
-    Save(puzzlename + "VIEW", JSON.stringify({ r: rotation, x: View.x, y: View.y, w: View.w }));
+    Save(progressKey + "VIEW", JSON.stringify({ r: rotation, x: View.x, y: View.y, w: View.w }));
 }
 
 function RestoreView() {
     var saved = null;
     try {
-        saved = JSON.parse(Load(puzzlename + "VIEW") || "null");
+        saved = JSON.parse(Load(progressKey + "VIEW") || "null");
     } catch (e) {
     }
     if (!saved)
@@ -484,53 +489,87 @@ function RestoreView() {
     restoringView = false;
 }
 
-// The regex as pieces of text, where a group that a backreference uses and its backreferences share a colour
-// (g1..g5): [{ text, color }]. Groups are numbered as JavaScript numbers them: every "(" except "(?:".
-function RegexPieces(regex) {
-    function Scan(visit) {
-        var inSet = false, stack = [], number = 0;
-        for (var i = 0; i < regex.length; ++i) {
-            var c = regex[i];
-            if (c == "\\") {
-                var m = /^\\(\d+)/.exec(regex.slice(i));
-                if (m && !inSet) {
-                    visit(i, m[0].length, "ref", Number(m[1]));
-                    i += m[0].length - 1;
-                } else {
-                    visit(i, 2, "", 0);
-                    ++i;
-                }
-            } else if (inSet) {
-                inSet = c != "]";
-                visit(i, 1, "", 0);
-            } else if (c == "[") {
-                inSet = true;
-                visit(i, 1, "", 0);
-            } else if (c == "(") {
-                var plain = regex.substr(i + 1, 2) == "?:";
-                stack.push(plain ? 0 : ++number);
-                visit(i, plain ? 3 : 1, plain ? "" : "open", plain ? 0 : number);
-                i += plain ? 2 : 0;
-            } else if (c == ")") {
-                var n = stack.pop() || 0;
-                visit(i, 1, n ? "close" : "", n);
-            } else
-                visit(i, 1, "", 0);
-        }
-    }
-    var colorOf = {}, colors = 0;
-    Scan(function (at, length, kind, n) {
-        if (kind == "ref" && !colorOf[n])
-            colorOf[n] = "g" + (colors++ % 5 + 1);
-    });
-    var pieces = [];
-    Scan(function (at, length, kind, n) {
-        var color = kind && colorOf[n] ? colorOf[n] : "";
-        var last = pieces[pieces.length - 1];
-        if (last && last.color == color && !color)
-            last.text += regex.substr(at, length);
+// The regex as pieces of text with a class each, for the label: [{ text, cls }].
+// groups (setting ColorGroups): a group that a backreference uses and its backreferences share a colour (group g1..g5);
+// groups are numbered as JavaScript numbers them, every "(" except "(?:".
+// alternatives (setting ColorAlternatives): within each group with a bar (and at the top level), the alternatives take
+// turns in two colours (alt a1, a2), so (AB|C) colours AB and C, and A(B|C) only B and C; the innermost group with a bar
+// decides; the bars and the parentheses keep the text colour.
+function RegexPieces(regex, groups, alternatives) {
+    // tokens: { at, length, kind: "open" | "close" | "bar" | "ref" | "", n (group number or backreference) }
+    var tokens = [], inSet = false, stack = [], number = 0;
+    for (var i = 0; i < regex.length; ++i) {
+        var c = regex[i];
+        if (c == "\\") {
+            var m = /^\\(\d+)/.exec(regex.slice(i));
+            if (m && !inSet) {
+                tokens.push({ at: i, length: m[0].length, kind: "ref", n: Number(m[1]) });
+                i += m[0].length - 1;
+            } else {
+                tokens.push({ at: i, length: 2, kind: "", n: 0 });
+                ++i;
+            }
+        } else if (inSet) {
+            inSet = c != "]";
+            tokens.push({ at: i, length: 1, kind: "", n: 0 });
+        } else if (c == "[") {
+            inSet = true;
+            tokens.push({ at: i, length: 1, kind: "", n: 0 });
+        } else if (c == "(") {
+            var plain = regex.substr(i + 1, 2) == "?:";
+            stack.push(plain ? 0 : ++number);
+            tokens.push({ at: i, length: plain ? 3 : 1, kind: "open", n: plain ? 0 : number });
+            i += plain ? 2 : 0;
+        } else if (c == ")") {
+            tokens.push({ at: i, length: 1, kind: "close", n: stack.pop() || 0 });
+        } else if (c == "|")
+            tokens.push({ at: i, length: 1, kind: "bar", n: 0 });
         else
-            pieces.push({ text: regex.substr(at, length), color: color });
+            tokens.push({ at: i, length: 1, kind: "", n: 0 });
+    }
+
+    // which groups (by their opening token) and whether the top level have a bar directly inside
+    var hasBar = {}, open = [-1];
+    tokens.forEach(function (t, k) {
+        if (t.kind == "open")
+            open.push(k);
+        else if (t.kind == "close")
+            open.pop();
+        else if (t.kind == "bar")
+            hasBar[open[open.length - 1]] = true;
+    });
+
+    var colorOf = {}, colors = 0;
+    tokens.forEach(function (t) {
+        if (t.kind == "ref" && !colorOf[t.n])
+            colorOf[t.n] = "g" + (colors++ % 5 + 1);
+    });
+
+    var pieces = [], frames = [{ bar: !!hasBar[-1], alt: 0 }];
+    tokens.forEach(function (t, k) {
+        if (t.kind == "close")
+            frames.pop();
+        if (t.kind == "bar")
+            frames[frames.length - 1].alt++;
+        var cls = [];
+        if (groups && (t.kind == "open" || t.kind == "close" || t.kind == "ref") && colorOf[t.n])
+            cls.push("group " + colorOf[t.n]);
+        if (alternatives && t.kind != "bar") {
+            var f = null; // the innermost group with a bar around this token
+            for (var j = frames.length - 1; j >= 0 && !f; --j)
+                if (frames[j].bar)
+                    f = frames[j];
+            if (f)
+                cls.push("alt a" + (f.alt % 2 + 1));
+        }
+        if (t.kind == "open")
+            frames.push({ bar: !!hasBar[k], alt: 0 });
+        var text = regex.substr(t.at, t.length), c = cls.join(" ");
+        var last = pieces[pieces.length - 1];
+        if (last && last.cls == c)
+            last.text += text;
+        else
+            pieces.push({ text: text, cls: c });
     });
     return pieces;
 }
@@ -540,17 +579,13 @@ function SetLabelText(label, prefix, regex) {
         label.removeChild(label.firstChild);
     if (prefix)
         label.appendChild(document.createTextNode(prefix));
-    if (!Setting("ColorGroups")) {
-        label.appendChild(document.createTextNode(regex));
-        return;
-    }
-    RegexPieces(regex).forEach(function (piece) {
-        if (!piece.color) {
+    RegexPieces(regex, Setting("ColorGroups"), Setting("ColorAlternatives")).forEach(function (piece) {
+        if (!piece.cls) {
             label.appendChild(document.createTextNode(piece.text));
             return;
         }
         var span = document.createElementNS(svgNS, "tspan");
-        span.setAttributeNS(null, "class", "group " + piece.color);
+        span.setAttributeNS(null, "class", piece.cls);
         span.textContent = piece.text;
         label.appendChild(span);
     });
@@ -678,7 +713,7 @@ function testField(costspoints) {
     }
     if (done) {
         SetMessage("Puzzle complete!", "done");
-        localStorage[puzzlename + "DONE"] = true;
+        localStorage[progressKey + "DONE"] = true;
     } else if (costspoints)
         SetMessage(wrong ? wrong + (wrong == 1 ? " cell is wrong" : " cells are wrong") : "No mistakes so far", wrong ? "wrong" : "");
     return done;
@@ -694,8 +729,8 @@ function SetText(char) {
                 cell.user += char;
         } else
             cell.user = char;
-        Save(puzzlename + selectedCells[i], cell.user);
-        Save(puzzlename + "STARTED", "1");
+        Save(progressKey + selectedCells[i], cell.user);
+        Save(progressKey + "STARTED", "1");
         document.getElementById("CELL" + selectedCells[i]).setAttributeNS(null, "class", "cell selected");
         DrawCell(selectedCells[i]);
     }
@@ -1042,13 +1077,14 @@ function StartPuzzle(arr, Newpuzzlename) {
         svg.removeChild(svg.firstChild);
 
     puzzlename = Newpuzzlename;
+    progressKey = arr.id || Newpuzzlename;
     for (var i in arr.field) {
         Field[i] = {
             x: undefined,
             y: undefined,
             regexes: [],
             solution: arr.field[i],
-            user: localStorage[puzzlename + i] || '.',
+            user: localStorage[progressKey + i] || '.',
             positioned: false
         };
     }

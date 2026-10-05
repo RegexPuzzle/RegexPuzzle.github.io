@@ -1,0 +1,21 @@
+{
+"Alphabet":["C","M","F","A","H","B","D","E","G","J","K","L"],
+"field": {
+"00": "M",
+"01": "M",
+"10": "C",
+"11": "C"}, 
+"regexes":[
+ {"positions":["00","10"], "regex": "[CM]*"},
+ {"positions":["01","11"], "regex": ".*"},
+ {"positions":["00","01"], "regex": "([MF])\\1"},
+ {"positions":["10","11"], "regex": "[CAH]C"}],
+"steps":[
+ {"cell":"11", "lines":[3]},
+ {"cell":"00", "lines":[0,2]},
+ {"cell":"01", "lines":[2]},
+ {"cell":"10", "lines":[0,3]}],
+"grade": {"medium":2, "depth":4},
+"extra": true,
+"difficulty": 6,
+"id": "5336429e036f9abf"}

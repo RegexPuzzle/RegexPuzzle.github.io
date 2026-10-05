@@ -1,0 +1,21 @@
+{
+"Alphabet":["G","H","L","J","D","A","B","C","E","F","K","M"],
+"field": {
+"00": "G",
+"01": "G",
+"10": "H",
+"11": "J"}, 
+"regexes":[
+ {"positions":["00","10"], "regex": "G*H*L*"},
+ {"positions":["01","11"], "regex": ".*GJ*"},
+ {"positions":["00","01"], "regex": "[GD]*"},
+ {"positions":["10","11"], "regex": "[HJ]*"}],
+"steps":[
+ {"cell":"00", "lines":[0,2]},
+ {"cell":"10", "lines":[0,3]},
+ {"cell":"11", "lines":[1,3]},
+ {"cell":"01", "lines":[1]}],
+"grade": {"medium":3, "depth":4},
+"extra": true,
+"difficulty": 6,
+"id": "a4a364a716c177c3"}

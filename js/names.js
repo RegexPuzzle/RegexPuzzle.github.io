@@ -44,6 +44,7 @@ function Save(key, value) {
 // Settings: stored as SETTING<key> = "true"/"false", shown in one panel (ShowSettings) on the overview and the puzzle page
 var SETTINGS = [
     { key: "ColorGroups", label: "Colour groups and their backreferences", note: "(.)..\\1: the group and the \\1 that repeats it share a colour", def: false },
+    { key: "ColorAlternatives", label: "Colour the alternatives", note: "(AB|C): AB and C in two colours, so you see what the bar splits", def: false },
     { key: "AlwaysDark", label: "Always dark", note: "Dark colours also when the phone or computer is set to light", def: false },
     { key: "DarkReaderLock", label: "Keep Dark Reader off this site", note: "The site has its own dark colours. Takes effect when the page loads again.", def: true }
 ];
@@ -118,9 +119,50 @@ function ShowSettings(onChange) {
 if ("serviceWorker" in navigator && window.isSecureContext)
     navigator.serviceWorker.register("sw.js").catch(function () { });
 
+// Progress is saved under a puzzle's id (ids.json, "id" in the puzzle): the same puzzle keeps it when it gets another
+// name or number, and another puzzle under an old name starts empty
+var PuzzleIds = {};
+function ProgressKey(name) {
+    return PuzzleIds[name] || name;
+}
+
+function LoadPuzzleIds(done) {
+    var xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState != 4)
+            return;
+        try {
+            if (xhr.status == 200)
+                PuzzleIds = JSON.parse(xhr.responseText) || {};
+        } catch (e) {
+        }
+        if (done)
+            done();
+    };
+    xhr.open("GET", "puzzles/ids.json", true);
+    xhr.send();
+}
+
+// Version 4: progress under ids. Earlier versions saved it under the puzzle names, which now mean other puzzles: that
+// progress goes, the settings and the last puzzle stay.
+(function () {
+    try {
+        if (localStorage["version"] == "4")
+            return;
+        for (var i = localStorage.length - 1; i >= 0; --i) {
+            var key = localStorage.key(i);
+            if (key.indexOf("SETTING") != 0 && key != "LastPuzzle")
+                localStorage.removeItem(key);
+        }
+        localStorage["version"] = "4";
+    } catch (e) {
+    }
+})();
+
 // new / started / solved, from what the puzzle page saved
 function PuzzleStatus(name) {
-    if (Load(name + "DONE") == "true")
+    var key = ProgressKey(name);
+    if (Load(key + "DONE") == "true")
         return "solved";
-    return Load(name + "STARTED") ? "started" : "new";
+    return Load(key + "STARTED") ? "started" : "new";
 }

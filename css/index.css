@@ -55,6 +55,8 @@
     --g4: #a21caf;
     --g5: #4d7c0f;
     --wave: #8fd19e;
+    --alt1: #0f766e; /* the alternatives of a | (setting) */
+    --alt2: #a3195b;
     --star: #b7791f;
     color-scheme: light;
 }
@@ -93,6 +95,8 @@
         --g4: #f0abfc;
         --g5: #bef264;
         --wave: #2f7a45;
+        --alt1: #5eead4;
+        --alt2: #f9a8d4;
         --star: #f2c14e;
         color-scheme: dark;
     }
@@ -132,6 +136,8 @@
     --g4: #f0abfc;
     --g5: #bef264;
     --wave: #2f7a45;
+    --alt1: #5eead4;
+    --alt2: #f9a8d4;
     --star: #f2c14e;
     color-scheme: dark;
 }
@@ -765,6 +771,10 @@ body.side-pad #Message {
 }
 
 /* groups that a backreference uses, and those backreferences, in the same colour */
+/* the alternatives of a | (setting): two colours in turn; group colours (below) win on parentheses and backreferences */
+#SVG .regex tspan.a1 { fill: var(--alt1); }
+#SVG .regex tspan.a2 { fill: var(--alt2); }
+
 #SVG .regex tspan.group {
     font-weight: bold;
 }
