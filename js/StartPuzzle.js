@@ -993,7 +993,14 @@ function StartPuzzle(arr, Newpuzzlename) {
     document.getElementById("Solved").hidden = true;
     SetMessage("");
 
-    document.getElementById("Hint").textContent = arr.hint || "";
+    // a tutorial lesson: its level and explanation in a card above the board
+    var hint = document.getElementById("Hint");
+    hint.textContent = "";
+    if (arr.hint) {
+        if (arr.level)
+            hint.appendChild(document.createElement("b")).textContent = arr.level;
+        hint.appendChild(document.createTextNode(arr.hint));
+    }
 
     var buttons = document.getElementById("Alphabet");
     while (buttons.firstChild)
@@ -1014,7 +1021,7 @@ function StartPuzzle(arr, Newpuzzlename) {
     }
     SetLetterPad();
 
-    document.getElementById("PuzzleName").textContent = PrettyName(Newpuzzlename);
+    document.getElementById("PuzzleName").textContent = arr.title ? "Lesson " + PuzzleNumber(Newpuzzlename) + " · " + arr.title : PrettyName(Newpuzzlename);
     var stars = document.getElementById("PuzzleStars");
     stars.textContent = arr.difficulty ? Stars(arr.difficulty) : "";
     stars.title = arr.difficulty ? "Difficulty " + arr.difficulty + " of 5 in this grid" : "";

@@ -1,19 +1,51 @@
 {
-"hint": "This puzzle contains 4 fields. Each line and row of fields is described using regular expressions (regex). A letter in the regtex means that the cell should contain that letter, a dot means that the cell may contain any letter. The first row thus starts with an 'A'",
-"Alphabet":["A","B","C","D","E","F","G","H","M","J","K","L"],
+"level": "Basics",
+"title": "Letters and dots",
+"hint": "Every cell holds one letter. Each row (left to right) and each column (top to bottom) must match its regular expression. A letter means that letter, a dot . means any letter. So the top row starts with an A. Tap a cell, then a letter.",
+"Alphabet": [
+"A",
+"B",
+"C"
+],
 "field": {
 "00": "A",
 "01": "C",
 "10": "B",
-"11": "B"}, 
-"regexes":[
- {"positions":["00","10"], "regex": "A."},
- {"positions":["01","11"], "regex": ".B"},
- {"positions":["00","01"], "regex": ".C"},
- {"positions":["10","11"], "regex": "B."}],
+"11": "B"
+},
+"regexes": [
+{
+"positions": [
+"00",
+"01"
+],
+"regex": "A."
+},
+{
+"positions": [
+"10",
+"11"
+],
+"regex": ".B"
+},
+{
+"positions": [
+"00",
+"10"
+],
+"regex": ".B"
+},
+{
+"positions": [
+"01",
+"11"
+],
+"regex": "C."
+}
+],
 "steps":[
  {"cell":"00", "lines":[0]},
  {"cell":"11", "lines":[1]},
- {"cell":"01", "lines":[2]},
- {"cell":"10", "lines":[3]}],
+ {"cell":"10", "lines":[2]},
+ {"cell":"01", "lines":[3]}],
 "grade": {"medium":0, "depth":1}}

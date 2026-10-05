@@ -1,0 +1,13 @@
+{
+"tutorial1": ["Basics", "Letters and dots"],
+"tutorial2": ["Basics", "Either or"],
+"tutorial3": ["Basics", "Pick a letter"],
+"tutorial4": ["Basics", "Anything but"],
+"tutorial5": ["Repeating", "Again and again"],
+"tutorial6": ["Repeating", "Maybe, or exactly so many"],
+"tutorial7": ["Groups", "Groups"],
+"tutorial8": ["Groups", "Echo"],
+"tutorial9": ["Groups", "Two echoes"],
+"tutorial10": ["Hexagons", "Three directions"],
+"tutorial11": ["On your own", "Your first real puzzle"]
+}

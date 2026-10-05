@@ -1,19 +1,52 @@
 {
-"hint": "If the first character of a bracket group is a '^', the regex maches any character that is not contained between the rest of the brackets. The first row thus does not start with a 'B'.",
-"Alphabet":["A","B", "C"],
+"level": "Basics",
+"title": "Anything but",
+"hint": "A dash makes a range: [A-C] is A, B or C. A ^ right after [ turns the choice around: [^AB] is any letter except A and B, and [^A-C] any letter after C.",
+"Alphabet": [
+"A",
+"B",
+"C",
+"D"
+],
 "field": {
-"00": "A",
-"01": "B",
-"10": "A",
-"11": "C"}, 
-"regexes":[
- {"positions":["00","10"], "regex": "[^B]."},
- {"positions":["01","11"], "regex": ".C"},
- {"positions":["00","01"], "regex": "AB|BA"},
- {"positions":["10","11"], "regex": "AC|CB"}],
+"00": "D",
+"01": "A",
+"10": "B",
+"11": "C"
+},
+"regexes": [
+{
+"positions": [
+"00",
+"01"
+],
+"regex": "[^A-C]A"
+},
+{
+"positions": [
+"10",
+"11"
+],
+"regex": "[A-B][^AB]"
+},
+{
+"positions": [
+"00",
+"10"
+],
+"regex": "D[^AC]"
+},
+{
+"positions": [
+"01",
+"11"
+],
+"regex": "[^B-D][B-C]"
+}
+],
 "steps":[
- {"cell":"11", "lines":[1]},
- {"cell":"10", "lines":[3]},
- {"cell":"00", "lines":[0,2]},
- {"cell":"01", "lines":[2]}],
-"grade": {"medium":1, "depth":4}}
+ {"cell":"00", "lines":[0]},
+ {"cell":"01", "lines":[0]},
+ {"cell":"10", "lines":[1,2]},
+ {"cell":"11", "lines":[1,3]}],
+"grade": {"medium":2, "depth":3}}

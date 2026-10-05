@@ -357,10 +357,80 @@ button:focus-visible {
     font-weight: bold;
 }
 
+/* a tutorial lesson's explanation: a card above the board */
 #Hint {
     max-width: 40em;
-    margin: 4px auto;
+    margin: 4px 12px;
+    padding: 8px 12px;
+    border-radius: 10px;
+    background: var(--card);
+    text-align: left;
     text-transform: none;
+    font-size: 14px;
+    line-height: 1.45;
+}
+
+@media (min-width: 40em) {
+    #Hint {
+        margin: 4px auto;
+    }
+}
+
+#Hint:empty {
+    display: none;
+}
+
+#Hint b {
+    display: block;
+    font-size: 11px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--muted);
+}
+
+/* the tutorial on the overview: lessons under their levels */
+.lessons h4 {
+    margin: 4px 0 0;
+    font-size: 12px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--muted);
+}
+
+.lesson-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 200px), 1fr));
+    gap: 6px;
+}
+
+.lesson {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    min-height: 40px;
+    padding: 4px 10px;
+    font: inherit;
+    font-size: 14px;
+    text-align: left;
+    border-radius: 6px;
+}
+
+.lesson-number {
+    font-variant-numeric: tabular-nums;
+    min-width: 1.4em;
+    font-weight: bold;
+}
+
+.lesson.solved {
+    background: var(--solved);
+    border-color: var(--solved);
+    color: #ffffff;
+}
+
+.lesson.started {
+    background: var(--started);
+    border-color: var(--started);
+    color: #111111;
 }
 
 #Message {

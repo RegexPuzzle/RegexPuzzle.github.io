@@ -1,19 +1,51 @@
 {
-"hint": "Brackets '[]' around characters means that one of these characters must be in the cell. The first row starts with either a 'B', or a 'C', and ends with either an 'A' or a 'C'.",
-"Alphabet":["A","B","C"],
+"level": "Basics",
+"title": "Pick a letter",
+"hint": "Square brackets hold a choice for one cell: [AB] is an A or a B. Every cell is in a row and a column, and its letter has to fit both: the top left cell is [AB] across and [AC] down, so it is an A. That is how every puzzle is solved.",
+"Alphabet": [
+"A",
+"B",
+"C"
+],
 "field": {
-"00": "B",
-"01": "B",
+"00": "A",
+"01": "C",
 "10": "C",
-"11": "B"}, 
-"regexes":[
- {"positions":["00","10"], "regex": "[BC][AC]"},
- {"positions":["01","11"], "regex": ".."},
- {"positions":["00","01"], "regex": "AA|BB"},
- {"positions":["10","11"], "regex": "[BC]B"}],
+"11": "B"
+},
+"regexes": [
+{
+"positions": [
+"00",
+"01"
+],
+"regex": "[AB][BC]"
+},
+{
+"positions": [
+"10",
+"11"
+],
+"regex": "[BC][AB]"
+},
+{
+"positions": [
+"00",
+"10"
+],
+"regex": "[AC][AC]"
+},
+{
+"positions": [
+"01",
+"11"
+],
+"regex": "[AC][BC]"
+}
+],
 "steps":[
- {"cell":"11", "lines":[3]},
  {"cell":"00", "lines":[0,2]},
- {"cell":"01", "lines":[2]},
- {"cell":"10", "lines":[0,3]}],
-"grade": {"medium":2, "depth":4}}
+ {"cell":"01", "lines":[0,3]},
+ {"cell":"10", "lines":[1,2]},
+ {"cell":"11", "lines":[1,3]}],
+"grade": {"medium":4, "depth":4}}

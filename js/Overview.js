@@ -1,7 +1,7 @@
 var deviceType = (navigator.userAgent.match(/iPad/i)) == "iPad" ? "iPad" : (navigator.userAgent.match(/iPhone/i)) == "iPhone" ? "iPhone" : (navigator.userAgent.match(/Android/i)) == "Android" ? "Android" : (navigator.userAgent.match(/BlackBerry/i)) == "BlackBerry" ? "BlackBerry" : "null";
 
 function DoPuzzle(puzzlename) {
-    window.location = "index.html?v=23#" + puzzlename; // ?v=: a new version of the scripts, not the cached one
+    window.location = "index.html?v=24#" + puzzlename; // ?v=: a new version of the scripts, not the cached one
 };
 
 function Element(tag, className, text) {
@@ -11,6 +11,40 @@ function Element(tag, className, text) {
     if (text !== undefined)
         el.textContent = text;
     return el;
+}
+
+// Level and name of each tutorial lesson (titles.json: {"tutorial1": ["Basics", "Letters and dots"], ...})
+var Titles = {};
+
+// The tutorial as a card of lessons: under each level its lessons, as buttons with number and name, coloured by status
+function LessonCard(names) {
+    var card = Element("section", "card lessons");
+    var solved = 0;
+    names.forEach(function (n) { solved += PuzzleStatus(n) == "solved"; });
+    var head = Element("div", "card-head");
+    head.appendChild(Element("h3", "", "Learn"));
+    head.appendChild(Element("span", "card-count", solved + " of " + names.length + " done"));
+    card.appendChild(head);
+    var level = null, list = null;
+    names.forEach(function (name) {
+        var t = Titles[name] || ["", PrettyName(name)];
+        if (t[0] != level || !list) {
+            level = t[0];
+            if (level)
+                card.appendChild(Element("h4", "", level));
+            list = Element("div", "lesson-list");
+            card.appendChild(list);
+        }
+        var status = PuzzleStatus(name);
+        var btn = Element("button", "lesson " + status);
+        btn.type = "button";
+        btn.appendChild(Element("span", "lesson-number", PuzzleNumber(name)));
+        btn.appendChild(Element("span", "lesson-name", t[1]));
+        btn.setAttribute("aria-label", "Lesson " + PuzzleNumber(name) + ", " + t[1] + ", " + status);
+        btn.onclick = function () { DoPuzzle(name); };
+        list.appendChild(btn);
+    });
+    return card;
 }
 
 // Difficulty 1-5 of each puzzle within its grid (difficulty.json, the same as "difficulty" in the puzzle files)
@@ -136,7 +170,9 @@ function Render(index) {
         if (!Array.isArray(index[group])) // a single card (Tutorial) is its own heading
             section.appendChild(Element("h2", "", group));
         var cards = Element("div", "cards");
-        if (Array.isArray(index[group]))
+        if (group == "Tutorial")
+            cards.appendChild(LessonCard(index[group]));
+        else if (Array.isArray(index[group]))
             cards.appendChild(Card(group, index[group]));
         else
             for (var grid in index[group])
@@ -168,8 +204,11 @@ function Fetch(file, done) {
 
 Fetch("difficulty.json", function (levels) {
     Difficulty = levels || {};
-    Fetch("index.json", function (index) {
-        if (index)
-            Render(index);
+    Fetch("titles.json", function (titles) {
+        Titles = titles || {};
+        Fetch("index.json", function (index) {
+            if (index)
+                Render(index);
+        });
     });
 });

@@ -1,0 +1,95 @@
+{
+"level": "Hexagons",
+"title": "Three directions",
+"hint": "On a hexagon, lines run in three directions: across and along both diagonals. Every expression reads along its own line, starting at the cell next to it. Turn the board with the slider if a label is upside down.",
+"Alphabet": [
+"A",
+"B",
+"C"
+],
+"field": {
+"00": "A",
+"10": "B",
+"01": "C",
+"11": "A",
+"21": "B",
+"12": "C",
+"22": "A"
+},
+"regexes": [
+{
+"positions": [
+"00",
+"10"
+],
+"regex": "A."
+},
+{
+"positions": [
+"01",
+"11",
+"21"
+],
+"regex": "..B"
+},
+{
+"positions": [
+"12",
+"22"
+],
+"regex": ".A"
+},
+{
+"positions": [
+"12",
+"01"
+],
+"regex": "C."
+},
+{
+"positions": [
+"22",
+"11",
+"00"
+],
+"regex": ".A."
+},
+{
+"positions": [
+"21",
+"10"
+],
+"regex": ".B"
+},
+{
+"positions": [
+"21",
+"22"
+],
+"regex": "B."
+},
+{
+"positions": [
+"10",
+"11",
+"12"
+],
+"regex": "..C"
+},
+{
+"positions": [
+"00",
+"01"
+],
+"regex": ".C"
+}
+],
+"steps":[
+ {"cell":"00", "lines":[0]},
+ {"cell":"21", "lines":[1]},
+ {"cell":"22", "lines":[2]},
+ {"cell":"12", "lines":[3]},
+ {"cell":"11", "lines":[4]},
+ {"cell":"10", "lines":[5]},
+ {"cell":"01", "lines":[8]}],
+"grade": {"medium":0, "depth":1}}
