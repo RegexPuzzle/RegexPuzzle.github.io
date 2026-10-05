@@ -85,7 +85,7 @@
  {"cell":"23", "lines":[8]},
  {"cell":"32", "lines":[2]},
  {"cell":"13", "lines":[3]},
- {"cell":"33", "lines":[3,11]},
- {"cell":"53", "lines":[3]}],
+ {"cell":"53", "lines":[3,11]},
+ {"cell":"33", "lines":[3]}],
 "grade": {"medium":2, "depth":9},
 "difficulty": 1}

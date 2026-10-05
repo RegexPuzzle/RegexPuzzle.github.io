@@ -78,8 +78,8 @@
  {"cell":"31", "lines":[1]},
  {"cell":"22", "lines":[2,9]},
  {"cell":"32", "lines":[2,9]},
- {"cell":"24", "lines":[8,17]},
  {"cell":"35", "lines":[8,17]},
+ {"cell":"24", "lines":[8]},
  {"cell":"12", "lines":[9,19]},
  {"cell":"13", "lines":[19]},
  {"cell":"10", "lines":[0,19]},
@@ -98,5 +98,5 @@
  {"cell":"34", "lines":[9]},
  {"cell":"63", "lines":[13]},
  {"cell":"33", "lines":[3]}],
-"grade": {"medium":7, "depth":16},
-"difficulty": 4}
+"grade": {"medium":6, "depth":16},
+"difficulty": 5}

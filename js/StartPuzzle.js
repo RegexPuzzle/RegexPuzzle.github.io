@@ -397,6 +397,15 @@ function ToggleHints() {
     ShowHints();
 }
 
+// A step of several regexes whose cell is not on all of them: they decide it through the cell(s) where they cross
+// (the steps take the crossing cell itself when they can; docs/design-solve-steps.md)
+function Through(step) {
+    var off = step.lines.filter(function (l) { return FieldRegexes[l].positions.indexOf(step.cell) < 0; }).length;
+    if (!off)
+        return "";
+    return step.lines.length == 2 ? ", through the cell where they cross" : ", through the cells where they cross";
+}
+
 function NextStep() {
     for (var i = 0; i < Steps.length; ++i)
         if (Field[Steps[i].cell] && Field[Steps[i].cell].user != Field[Steps[i].cell].solution)
@@ -444,7 +453,7 @@ function ShowHints() {
             text = wrong + (wrong == 1 ? " letter is wrong" : " letters are wrong");
         else if (stepHint && typeof stepHint == "object")
             text = stepHint.lines.length == 1 ? "Hint: this regex alone decides the marked cell"
-                : "Hint: these " + stepHint.lines.length + " regexes together decide the marked cell";
+                : "Hint: these " + stepHint.lines.length + " regexes together decide the marked cell" + Through(stepHint);
         else
             text = "No wrong letters";
         SetMessage(text + " · hints used: " + hints, wrong ? "wrong" : "");

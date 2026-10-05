@@ -94,8 +94,8 @@
  {"cell":"40", "lines":[0]},
  {"cell":"85", "lines":[5]},
  {"cell":"88", "lines":[18]},
- {"cell":"00", "lines":[0,24]},
  {"cell":"20", "lines":[0,24]},
+ {"cell":"00", "lines":[0]},
  {"cell":"37", "lines":[7,9]},
  {"cell":"47", "lines":[7]},
  {"cell":"57", "lines":[7]},
@@ -152,5 +152,5 @@
  {"cell":"25", "lines":[8,10,24]},
  {"cell":"58", "lines":[10]},
  {"cell":"48", "lines":[8]}],
-"grade": {"medium":8, "depth":18},
+"grade": {"medium":7, "depth":18},
 "difficulty": 3}

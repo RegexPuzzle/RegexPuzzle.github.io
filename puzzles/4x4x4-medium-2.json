@@ -96,7 +96,7 @@
  {"cell":"46", "lines":[16]},
  {"cell":"36", "lines":[5,7]},
  {"cell":"66", "lines":[6]},
- {"cell":"20", "lines":[5,18]},
- {"cell":"25", "lines":[18]}],
+ {"cell":"25", "lines":[5,18]},
+ {"cell":"20", "lines":[18]}],
 "grade": {"medium":2, "depth":9},
 "difficulty": 2}

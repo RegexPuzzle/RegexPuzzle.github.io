@@ -24,8 +24,8 @@
  {"cell":"02", "lines":[3]},
  {"cell":"10", "lines":[2,4]},
  {"cell":"00", "lines":[0]},
- {"cell":"12", "lines":[2,5]},
- {"cell":"22", "lines":[2]},
+ {"cell":"22", "lines":[2,5]},
+ {"cell":"12", "lines":[2]},
  {"cell":"20", "lines":[5]}],
-"grade": {"medium":2, "depth":7},
+"grade": {"medium":2, "depth":6},
 "difficulty": 2}
