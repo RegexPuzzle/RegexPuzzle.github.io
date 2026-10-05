@@ -1033,7 +1033,7 @@ function StartPuzzle(arr, Newpuzzlename) {
     document.getElementById("PuzzleName").textContent = arr.title ? "Lesson " + PuzzleNumber(Newpuzzlename) + " · " + arr.title : PrettyName(Newpuzzlename);
     var stars = document.getElementById("PuzzleStars");
     stars.textContent = arr.difficulty ? Stars(arr.difficulty) : "";
-    stars.title = arr.difficulty ? "Difficulty " + arr.difficulty + " of 5 in this grid" : "";
+    stars.title = arr.difficulty ? DifficultyText(arr.difficulty) + " in this grid" : "";
     stars.setAttribute("aria-label", stars.title);
     document.title = "RegEx puzzle " + Newpuzzlename;
 

@@ -15,9 +15,14 @@ function PuzzleNumber(name) {
     return m ? m[1] : name;
 }
 
-// A puzzle's difficulty within its grid (1-5, "difficulty" in the puzzle) as that many stars
+// A puzzle's difficulty within its grid (1-5, "difficulty" in the puzzle; 6 for an extra hard one) as that many stars
 function Stars(level) {
-    return new Array(Math.max(0, Math.min(5, level | 0)) + 1).join("★");
+    return new Array(Math.max(0, Math.min(6, level | 0)) + 1).join("★");
+}
+
+// The difficulty in words: "difficulty 3 of 5", or "extra hard" for 6
+function DifficultyText(level) {
+    return level >= 6 ? "extra hard" : "difficulty " + level + " of 5";
 }
 
 // localStorage can be unavailable (private windows, blocked site data): reading and writing never throw

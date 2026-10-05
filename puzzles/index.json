@@ -47,7 +47,8 @@
 		"3x3x3-easy-7",
 		"3x3x3-easy-8",
 		"3x3x3-easy-9",
-		"3x3x3-easy-10"
+		"3x3x3-easy-10",
+		"3x3x3-easy-11"
 	],
 	"4x4": [
 		"4x4-easy-1",
@@ -71,7 +72,8 @@
 		"4x4x4-easy-7",
 		"4x4x4-easy-8",
 		"4x4x4-easy-9",
-		"4x4x4-easy-10"
+		"4x4x4-easy-10",
+		"4x4x4-easy-11"
 	],
 	"5x5x5": [
 		"5x5x5-easy-1",
@@ -169,7 +171,8 @@
 		"3x3x3-medium-7",
 		"3x3x3-medium-8",
 		"3x3x3-medium-9",
-		"3x3x3-medium-10"
+		"3x3x3-medium-10",
+		"3x3x3-medium-11"
 	],
 	"4x4": [
 		"4x4-medium-1",
@@ -193,7 +196,8 @@
 		"4x4x4-medium-7",
 		"4x4x4-medium-8",
 		"4x4x4-medium-9",
-		"4x4x4-medium-10"
+		"4x4x4-medium-10",
+		"4x4x4-medium-11"
 	],
 	"5x5x5": [
 		"5x5x5-medium-1",

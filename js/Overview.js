@@ -1,7 +1,7 @@
 var deviceType = (navigator.userAgent.match(/iPad/i)) == "iPad" ? "iPad" : (navigator.userAgent.match(/iPhone/i)) == "iPhone" ? "iPhone" : (navigator.userAgent.match(/Android/i)) == "Android" ? "Android" : (navigator.userAgent.match(/BlackBerry/i)) == "BlackBerry" ? "BlackBerry" : "null";
 
 function DoPuzzle(puzzlename) {
-    window.location = "index.html?v=25#" + puzzlename; // ?v=: a new version of the scripts, not the cached one
+    window.location = "index.html?v=26#" + puzzlename; // ?v=: a new version of the scripts, not the cached one
 };
 
 function Element(tag, className, text) {
@@ -67,8 +67,8 @@ function Card(title, names) {
         var btn = Element("button", "number " + status, PuzzleNumber(name));
         btn.type = "button";
         var level = Difficulty[name];
-        btn.setAttribute("aria-label", PrettyName(name) + ", " + status + (level ? ", difficulty " + level + " of 5" : ""));
-        btn.title = PrettyName(name) + (level ? " · difficulty " + level + "/5" : "");
+        btn.setAttribute("aria-label", PrettyName(name) + ", " + status + (level ? ", " + DifficultyText(level) : ""));
+        btn.title = PrettyName(name) + (level ? " · " + DifficultyText(level) : "");
         if (level)
             btn.appendChild(Element("span", "stars", Stars(level)));
         btn.onclick = function () { DoPuzzle(name); };
@@ -161,7 +161,7 @@ function Render(index) {
     });
     var scale = Element("span", "");
     scale.appendChild(Element("i", "stars", "★★★"));
-    scale.appendChild(document.createTextNode("Difficulty in its grid (1–5 stars)"));
+    scale.appendChild(document.createTextNode("Difficulty in its grid (1–5 stars, 6: extra hard)"));
     legend.appendChild(scale);
     root.appendChild(legend);
 
