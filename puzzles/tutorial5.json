@@ -68,6 +68,9 @@
 "regex": "B*C+A"
 }
 ],
+"title_nl": "Steeds weer",
+"level_nl": "Herhalen",
+"hint_nl": "Een * herhaalt wat er direct voor staat, een willekeurig aantal keer, ook nul keer: A*B+ kan alleen uit B's bestaan. Een + herhaalt het minstens één keer: A+C* begint met een of meer A's.",
 "steps":[
  {"cell":"02", "lines":[0]},
  {"cell":"10", "lines":[1]},

@@ -1,7 +1,7 @@
 var deviceType = (navigator.userAgent.match(/iPad/i)) == "iPad" ? "iPad" : (navigator.userAgent.match(/iPhone/i)) == "iPhone" ? "iPhone" : (navigator.userAgent.match(/Android/i)) == "Android" ? "Android" : (navigator.userAgent.match(/BlackBerry/i)) == "BlackBerry" ? "BlackBerry" : "null";
 
 function DoPuzzle(puzzlename) {
-    window.location = "index.html?v=29#" + puzzlename; // ?v=: a new version of the scripts, not the cached one
+    window.location = "index.html?v=31#" + puzzlename; // ?v=: a new version of the scripts, not the cached one
 };
 
 function Element(tag, className, text) {
@@ -22,12 +22,13 @@ function LessonCard(names) {
     var solved = 0;
     names.forEach(function (n) { solved += PuzzleStatus(n) == "solved"; });
     var head = Element("div", "card-head");
-    head.appendChild(Element("h3", "", "Learn"));
-    head.appendChild(Element("span", "card-count", solved + " of " + names.length + " done"));
+    head.appendChild(Element("h3", "", T("Learn")));
+    head.appendChild(Element("span", "card-count", T("{0} of {1} done", solved, names.length)));
     card.appendChild(head);
     var level = null, list = null;
     names.forEach(function (name) {
-        var t = Titles[name] || ["", PrettyName(name)];
+        var titles = Titles[name] || [];
+        var t = Lang() == "nl" && titles[3] ? [titles[2] || titles[0], titles[3]] : [titles[0] || "", titles[1] || PrettyName(name)];
         if (t[0] != level || !list) {
             level = t[0];
             if (level)
@@ -40,7 +41,7 @@ function LessonCard(names) {
         btn.type = "button";
         btn.appendChild(Element("span", "lesson-number", PuzzleNumber(name)));
         btn.appendChild(Element("span", "lesson-name", t[1]));
-        btn.setAttribute("aria-label", "Lesson " + PuzzleNumber(name) + ", " + t[1] + ", " + status);
+        btn.setAttribute("aria-label", T("Lesson {0}", PuzzleNumber(name)) + ", " + t[1] + ", " + T(status));
         btn.onclick = function () { DoPuzzle(name); };
         list.appendChild(btn);
     });
@@ -59,7 +60,7 @@ function Card(title, names) {
         solved += PuzzleStatus(names[i]) == "solved";
     var head = Element("div", "card-head");
     head.appendChild(Element("h3", "", title));
-    head.appendChild(Element("span", "card-count", solved + " of " + names.length + " solved"));
+    head.appendChild(Element("span", "card-count", T("{0} of {1} solved", solved, names.length)));
     card.appendChild(head);
     var grid = Element("div", "numbers");
     names.forEach(function (name) {
@@ -67,7 +68,7 @@ function Card(title, names) {
         var btn = Element("button", "number " + status, PuzzleNumber(name));
         btn.type = "button";
         var level = Difficulty[name];
-        btn.setAttribute("aria-label", PrettyName(name) + ", " + status + (level ? ", " + DifficultyText(level) : ""));
+        btn.setAttribute("aria-label", PrettyName(name) + ", " + T(status) + (level ? ", " + DifficultyText(level) : ""));
         btn.title = PrettyName(name) + (level ? " · " + DifficultyText(level) : "");
         if (level)
             btn.appendChild(Element("span", "stars", Stars(level)));
@@ -107,18 +108,18 @@ function ShowInstall() {
     }
     box.hidden = false;
     if (installPrompt) {
-        var btn = Element("button", "install", "Install as app");
+        var btn = Element("button", "install", T("Install as app"));
         btn.type = "button";
         btn.onclick = function () {
             installPrompt.prompt();
             installPrompt.userChoice.then(function () { installPrompt = null; ShowInstall(); });
         };
         box.appendChild(btn);
-        box.appendChild(Element("span", "", "Plays full screen and offline."));
+        box.appendChild(Element("span", "", T("Plays full screen and offline.")));
     } else if (ios)
-        box.appendChild(Element("span", "", "Install as app: tap Share, then Add to Home Screen."));
+        box.appendChild(Element("span", "", T("Install as app: tap Share, then Add to Home Screen.")));
     else if (!window.isSecureContext)
-        box.appendChild(Element("span", "", "Installing as an app needs a secure (https) address. Use the browser menu's Add to Home screen for a shortcut."));
+        box.appendChild(Element("span", "", T("Installing as an app needs a secure (https) address. Use the browser menu's Add to Home screen for a shortcut.")));
     else
         box.hidden = true; // the browser may offer it later (beforeinstallprompt)
 }
@@ -128,11 +129,12 @@ function Render(index) {
     while (root.firstChild)
         root.removeChild(root.firstChild);
     var header = Element("div", "page-head");
-    header.appendChild(Element("h1", "", "RegEx puzzles"));
+    header.appendChild(Element("h1", "", T("RegEx puzzles")));
+    document.title = T("RegEx puzzles");
     var gear = Element("button", "settings-button", "⚙");
     gear.type = "button";
-    gear.title = "Settings";
-    gear.setAttribute("aria-label", "Settings");
+    gear.title = T("Settings");
+    gear.setAttribute("aria-label", T("Settings"));
     gear.onclick = function () { ShowSettings(null); };
     header.appendChild(gear);
     root.appendChild(header);
@@ -146,7 +148,7 @@ function Render(index) {
     if (last) {
         var cont = Element("button", "continue");
         cont.type = "button";
-        cont.appendChild(Element("span", "", (PuzzleStatus(last) == "solved" ? "Again: " : "Continue: ") + PrettyName(last)));
+        cont.appendChild(Element("span", "", T(PuzzleStatus(last) == "solved" ? "Again: {0}" : "Continue: {0}", PrettyName(last))));
         cont.appendChild(Element("span", "", "▶"));
         cont.onclick = function () { DoPuzzle(last); };
         root.appendChild(cont);
@@ -156,19 +158,19 @@ function Render(index) {
     [["solved", "Solved"], ["started", "Started"], ["new", "New"]].forEach(function (s) {
         var item = Element("span", "");
         item.appendChild(Element("i", "swatch " + s[0]));
-        item.appendChild(document.createTextNode(s[1]));
+        item.appendChild(document.createTextNode(T(s[1])));
         legend.appendChild(item);
     });
     var scale = Element("span", "");
     scale.appendChild(Element("i", "stars", "★★★"));
-    scale.appendChild(document.createTextNode("Difficulty in its grid (1–5 stars, 6: extra hard)"));
+    scale.appendChild(document.createTextNode(T("Difficulty in its grid (1–5 stars, 6: extra hard)")));
     legend.appendChild(scale);
     root.appendChild(legend);
 
     for (var group in index) {
         var section = Element("div", "group");
         if (!Array.isArray(index[group])) // a single card (Tutorial) is its own heading
-            section.appendChild(Element("h2", "", group));
+            section.appendChild(Element("h2", "", T(group)));
         var cards = Element("div", "cards");
         if (group == "Tutorial")
             cards.appendChild(LessonCard(index[group]));

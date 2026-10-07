@@ -1,14 +1,14 @@
 {
-"tutorial1": ["Basics", "Letters and dots"],
-"tutorial2": ["Basics", "Either or"],
-"tutorial3": ["Basics", "Pick a letter"],
-"tutorial4": ["Basics", "Anything but"],
-"tutorial5": ["Repeating", "Again and again"],
-"tutorial6": ["Repeating", "Maybe, or exactly so many"],
-"tutorial7": ["Groups", "Groups"],
-"tutorial8": ["Groups", "What the bar splits"],
-"tutorial9": ["Groups", "Echo"],
-"tutorial10": ["Groups", "Two echoes"],
-"tutorial11": ["Hexagons", "Three directions"],
-"tutorial12": ["On your own", "Your first real puzzle"]
+"tutorial1": ["Basics", "Letters and dots", "Basis", "Letters en punten"],
+"tutorial2": ["Basics", "Either or", "Basis", "Of dit of dat"],
+"tutorial3": ["Basics", "Pick a letter", "Basis", "Kies een letter"],
+"tutorial4": ["Basics", "Anything but", "Basis", "Alles behalve"],
+"tutorial5": ["Repeating", "Again and again", "Herhalen", "Steeds weer"],
+"tutorial6": ["Repeating", "Maybe, or exactly so many", "Herhalen", "Misschien, of precies zoveel"],
+"tutorial7": ["Groups", "Groups", "Groepen", "Groepen"],
+"tutorial8": ["Groups", "What the bar splits", "Groepen", "Wat het streepje scheidt"],
+"tutorial9": ["Groups", "Echo", "Groepen", "Echo"],
+"tutorial10": ["Groups", "Two echoes", "Groepen", "Twee echo's"],
+"tutorial11": ["Hexagons", "Three directions", "Zeshoeken", "Drie richtingen"],
+"tutorial12": ["On your own", "Your first real puzzle", "Zelf aan de slag", "Je eerste echte puzzel"]
 }

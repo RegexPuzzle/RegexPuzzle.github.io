@@ -99,6 +99,9 @@
 "regex": "(B)\\1.\\1"
 }
 ],
+"title_nl": "Twee echo's",
+"level_nl": "Groepen",
+"hint_nl": "Elke groep heeft een nummer: tel de openingshaakjes van links. \\2 herhaalt wat de tweede groep vond. Een groep kan meer dan één letter bevatten: (..)\\1 is ABAB, CACA, ...",
 "steps":[
  {"cell":"11", "lines":[1]},
  {"cell":"23", "lines":[2]},

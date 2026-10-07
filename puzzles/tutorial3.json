@@ -43,6 +43,9 @@
 "regex": "[AC][BC]"
 }
 ],
+"title_nl": "Kies een letter",
+"level_nl": "Basis",
+"hint_nl": "Vierkante haken bevatten een keuze voor één vakje: [AB] is een A of een B. Elk vakje ligt in een rij en een kolom, en de letter moet bij allebei passen: het vakje linksboven is [AB] in de rij en [AC] in de kolom, dus een A. Zo los je elke puzzel op.",
 "steps":[
  {"cell":"00", "lines":[0,2]},
  {"cell":"01", "lines":[0,3]},

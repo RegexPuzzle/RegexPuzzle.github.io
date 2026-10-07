@@ -42,6 +42,9 @@
 "regex": ".A"
 }
 ],
+"title_nl": "Of dit of dat",
+"level_nl": "Basis",
+"hint_nl": "Een streepje | betekent of: de bovenste rij is AA of BB, de onderste AB of BA. De kolommen bepalen welke.",
 "steps":[
  {"cell":"00", "lines":[2]},
  {"cell":"11", "lines":[3]},

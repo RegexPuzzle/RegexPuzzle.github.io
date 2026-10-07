@@ -694,6 +694,12 @@ body.side-pad #Message {
     fill: var(--cell-multi);
 }
 
+/* a letter that was checked on leaving its cell and is wrong (setting): red and struck through, not only a colour */
+#SVG text[data-check="wrong"] {
+    fill: var(--wrong);
+    text-decoration: line-through;
+}
+
 #SVG .regexbg.active {
     display: inline;
 }
@@ -756,8 +762,9 @@ body.side-pad #Message {
     outline: none;
 }
 
+/* a matching line fits its regex; its letters can still be wrong, so no green (only the solved puzzle is right) */
 #SVG .regex.ok {
-    fill: var(--ok);
+    fill: var(--ink);
 }
 
 #SVG .regex.wrong {
@@ -867,6 +874,25 @@ body.side-pad #Message {
     margin: 1px 0 0;
     accent-color: var(--btn-on);
     flex: none;
+}
+
+/* a choice from a list (the language): the text, then the list */
+#Settings .setting.choice {
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    cursor: default;
+}
+
+#Settings .setting.choice select {
+    min-height: 36px;
+    padding: 4px 8px;
+    font: inherit;
+    font-size: 15px;
+    border-radius: 8px;
+    border: 1px solid var(--btn-line);
+    background: var(--btn);
+    color: var(--ink);
 }
 
 #Settings .setting small {

@@ -84,6 +84,9 @@
 "regex": ".C"
 }
 ],
+"title_nl": "Drie richtingen",
+"level_nl": "Zeshoeken",
+"hint_nl": "Op een zeshoek lopen de lijnen in drie richtingen: horizontaal en langs beide schuine richtingen. Elke expressie leest langs zijn eigen lijn, te beginnen bij het vakje ernaast. Draai het bord met de schuifregelaar als een label op zijn kop staat.",
 "steps":[
  {"cell":"00", "lines":[0]},
  {"cell":"21", "lines":[1]},

@@ -68,6 +68,9 @@
 "regex": "A(.)\\1"
 }
 ],
+"title_nl": "Echo",
+"level_nl": "Groepen",
+"hint_nl": "(.) onthoudt de letter die hij vindt, en \\1 moet diezelfde letter nog eens zijn: (.)B\\1 is ABA, BBB of CBC.",
 "steps":[
  {"cell":"01", "lines":[0]},
  {"cell":"12", "lines":[1]},

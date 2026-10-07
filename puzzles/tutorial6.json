@@ -68,6 +68,9 @@
 "regex": "CA?B"
 }
 ],
+"title_nl": "Misschien, of precies zoveel",
+"level_nl": "Herhalen",
+"hint_nl": "Een ? maakt wat ervoor staat optioneel: in AB?C{2} mag de B ontbreken. {2} herhaalt het precies twee keer, {1,2} een of twee keer.",
 "steps":[
  {"cell":"00", "lines":[0]},
  {"cell":"01", "lines":[0]},

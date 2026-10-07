@@ -257,7 +257,7 @@ function DrawCell(cellid) {
     text.setAttributeNS(null, "class", item.user.length > 1 ? "multi" : "");
     text.style["font-size"] = item.user.length > 1 ? smallfontsize : normalfontsize;
     var circle = document.getElementById("CELL" + cellid);
-    circle.setAttributeNS(null, "aria-label", "cell " + cellid + ": " + (item.user == "." ? "empty" : CellText(cellid)));
+    circle.setAttributeNS(null, "aria-label", T("cell {0}: {1}", cellid, item.user == "." ? T("empty") : CellText(cellid)));
 }
 
 // Progress, the finish, hints and the remembered view (proposals 7, 10 and 13 of the front-end review)
@@ -265,7 +265,7 @@ var hintMode = false;
 var announceSolved = false; // only when the last line matches while playing, not when a solved puzzle is opened
 
 function UpdateProgress(ok, total) {
-    document.getElementById("ProgressText").textContent = ok + "/" + total + " lines";
+    document.getElementById("ProgressText").textContent = T("{0}/{1} lines", ok, total);
     document.getElementById("ProgressBar").style.width = (total ? 100 * ok / total : 0) + "%";
 }
 
@@ -331,7 +331,7 @@ function Wave() {
 // Every line matches: with a unique solution that is the solution
 function Solved() {
     Save(progressKey + "DONE", true);
-    SetMessage("Solved", "done");
+    SetMessage(T("Solved"), "done");
     if (!announceSolved)
         return;
     announceSolved = false;
@@ -341,30 +341,30 @@ function Solved() {
     var box = document.getElementById("Solved");
     box.innerHTML = "";
     var title = document.createElement("b");
-    title.textContent = "Solved";
+    title.textContent = T("Solved");
     box.appendChild(title);
     box.appendChild(document.createTextNode(PrettyName(puzzlename)));
     var facts = document.createElement("span");
     facts.className = "facts";
-    facts.textContent = [time ? Duration(time) : "", hints ? hints + (hints == 1 ? " hint" : " hints") : "no hints"].filter(Boolean).join(" · ");
+    facts.textContent = [time ? Duration(time) : "", hints ? T(hints == 1 ? "{0} hint" : "{0} hints", hints) : T("no hints")].filter(Boolean).join(" · ");
     box.appendChild(facts);
     var buttons = document.createElement("span");
     buttons.className = "actions";
     var close = document.createElement("button");
     close.type = "button";
-    close.textContent = "Close";
+    close.textContent = T("Close");
     close.onclick = function () { box.hidden = true; };
     var next = document.createElement("button");
     next.type = "button";
     next.className = "next";
-    next.textContent = "Next puzzle ▶";
+    next.textContent = T("Next puzzle ▶");
     next.disabled = true;
     buttons.appendChild(close);
     buttons.appendChild(next);
     box.appendChild(buttons);
     NextPuzzle(function (name) {
         if (!name) {
-            next.textContent = "All solved ▶";
+            next.textContent = T("All solved ▶");
             next.onclick = function () { gotomain(); };
         } else
             next.onclick = function () { box.hidden = true; window.location.hash = name; };
@@ -381,6 +381,49 @@ function Solved() {
         if (navigator.vibrate)
             navigator.vibrate([60, 40, 120]);
     } catch (e) {
+    }
+}
+
+// Checking on leaving a cell (setting CheckOnLeave, on by default): a letter is compared with the solution when its
+// cell is no longer selected; a wrong one turns red until it is changed (<name>WRONG keeps the marks), and counts as a
+// hint once. A line that matches its regex only fits; the letters can still be wrong.
+function CheckLeftCells(cells) {
+    if (!Setting("CheckOnLeave"))
+        return;
+    var found = 0;
+    cells.forEach(function (id) {
+        var cell = Field[id];
+        if (!cell || cell.markedWrong || cell.user.length != 1 || cell.user == "." || cell.user == cell.solution)
+            return;
+        cell.markedWrong = true;
+        found++;
+    });
+    if (!found)
+        return;
+    var hints = Number(Load(progressKey + "HINTS") || 0) + found;
+    Save(progressKey + "HINTS", hints);
+    SaveMarks();
+    ShowMarks();
+    if (hintMode)
+        ShowHints();
+    else
+        SetMessage(T("{0} · hints used: {1}", T(found == 1 ? "{0} letter is wrong" : "{0} letters are wrong", found), hints), "wrong");
+}
+
+function SaveMarks() {
+    Save(progressKey + "WRONG", Object.keys(Field).filter(function (id) { return Field[id].markedWrong; }).join(","));
+}
+
+function ShowMarks() {
+    var on = Setting("CheckOnLeave");
+    for (var id in Field) {
+        var text = document.getElementById("CELLTEXT" + id);
+        if (!text)
+            continue;
+        if (on && Field[id].markedWrong)
+            text.setAttribute("data-check", "wrong");
+        else
+            text.removeAttribute("data-check");
     }
 }
 
@@ -408,7 +451,7 @@ function Through(step) {
     var off = step.lines.filter(function (l) { return FieldRegexes[l].positions.indexOf(step.cell) < 0; }).length;
     if (!off)
         return "";
-    return step.lines.length == 2 ? ", through the cell where they cross" : ", through the cells where they cross";
+    return T(step.lines.length == 2 ? ", through the cell where they cross" : ", through the cells where they cross");
 }
 
 function NextStep() {
@@ -455,13 +498,13 @@ function ShowHints() {
     if (hintMode) {
         var hints = Number(Load(progressKey + "HINTS") || 0), text;
         if (wrong)
-            text = wrong + (wrong == 1 ? " letter is wrong" : " letters are wrong");
+            text = T(wrong == 1 ? "{0} letter is wrong" : "{0} letters are wrong", wrong);
         else if (stepHint && typeof stepHint == "object")
-            text = stepHint.lines.length == 1 ? "Hint: this regex alone decides the marked cell"
-                : "Hint: these " + stepHint.lines.length + " regexes together decide the marked cell" + Through(stepHint);
+            text = stepHint.lines.length == 1 ? T("Hint: this regex alone decides the marked cell")
+                : T("Hint: these {0} regexes together decide the marked cell", stepHint.lines.length) + Through(stepHint);
         else
-            text = "No wrong letters";
-        SetMessage(text + " · hints used: " + hints, wrong ? "wrong" : "");
+            text = T("No wrong letters");
+        SetMessage(T("{0} · hints used: {1}", text, hints), wrong ? "wrong" : "");
     } else if (!document.getElementById("Message").classList.contains("done"))
         SetMessage("");
 }
@@ -616,9 +659,9 @@ function UpdateFullScreenButton() {
     var root = document.documentElement;
     button.hidden = !(document.fullscreenEnabled || document.webkitFullscreenEnabled) || !(root.requestFullscreen || root.webkitRequestFullscreen);
     var on = !!FullScreenElement();
-    button.setAttribute("aria-label", on ? "Leave full screen" : "Full screen");
-    button.querySelector("small").textContent = on ? "Exit" : "Full";
-    button.title = on ? "Leave full screen" : "Full screen";
+    button.setAttribute("aria-label", T(on ? "Leave full screen" : "Full screen"));
+    button.querySelector("small").textContent = T(on ? "Exit" : "Full");
+    button.title = T(on ? "Leave full screen" : "Full screen");
     button.setAttribute("aria-pressed", on ? "true" : "false");
 }
 document.addEventListener("fullscreenchange", UpdateFullScreenButton);
@@ -634,6 +677,7 @@ function OpenSettings() {
                 while (label.firstChild)
                     label.removeChild(label.firstChild); // CheckLines writes the text again
         }
+        ShowMarks();
         CheckLines();
     });
 }
@@ -712,10 +756,10 @@ function testField(costspoints) {
         }
     }
     if (done) {
-        SetMessage("Puzzle complete!", "done");
+        SetMessage(T("Puzzle complete!"), "done");
         localStorage[progressKey + "DONE"] = true;
     } else if (costspoints)
-        SetMessage(wrong ? wrong + (wrong == 1 ? " cell is wrong" : " cells are wrong") : "No mistakes so far", wrong ? "wrong" : "");
+        SetMessage(wrong ? T(wrong == 1 ? "{0} cell is wrong" : "{0} cells are wrong", wrong) : T("No mistakes so far"), wrong ? "wrong" : "");
     return done;
 };
 
@@ -729,13 +773,18 @@ function SetText(char) {
                 cell.user += char;
         } else
             cell.user = char;
+        cell.markedWrong = false;
         Save(progressKey + selectedCells[i], cell.user);
         Save(progressKey + "STARTED", "1");
         document.getElementById("CELL" + selectedCells[i]).setAttributeNS(null, "class", "cell selected");
         DrawCell(selectedCells[i]);
     }
     nextisor = false;
+    SaveMarks();
+    ShowMarks();
     CheckLines();
+    if (!hintMode && document.getElementById("Message").className == "wrong")
+        SetMessage(""); // the message of a check on leaving
     // a letter in the cell that the hint marked: the hint has done its job, so hint mode goes off (right or wrong)
     if (hintMode && char != "." && stepHint && typeof stepHint == "object" && selectedCells.indexOf(stepHint.cell) >= 0)
         ToggleHints();
@@ -1003,11 +1052,13 @@ function SelectCellsbetween(startcell, endcell) {
 
 function SelectCell(Cell, addtoselection) {
     nextisor = false;
+    var left = addtoselection ? [] : selectedCells.filter(function (id) { return id != Cell; });
     if (!addtoselection) {
         for (var i in Field)
             document.getElementById("CELL" + i).setAttributeNS(null, "class", "cell");
         selectedCells = [];
     }
+    CheckLeftCells(left);
     if (!Cell) {
         MarkLines();
         return;
@@ -1042,8 +1093,8 @@ function StartPuzzle(arr, Newpuzzlename) {
     hint.textContent = "";
     if (arr.hint) {
         if (arr.level)
-            hint.appendChild(document.createElement("b")).textContent = arr.level;
-        hint.appendChild(document.createTextNode(arr.hint));
+            hint.appendChild(document.createElement("b")).textContent = Localized(arr, "level");
+        hint.appendChild(document.createTextNode(Localized(arr, "hint")));
     }
 
     var buttons = document.getElementById("Alphabet");
@@ -1065,12 +1116,12 @@ function StartPuzzle(arr, Newpuzzlename) {
     }
     SetLetterPad();
 
-    document.getElementById("PuzzleName").textContent = arr.title ? "Lesson " + PuzzleNumber(Newpuzzlename) + " · " + arr.title : PrettyName(Newpuzzlename);
+    document.getElementById("PuzzleName").textContent = arr.title ? T("Lesson {0}", PuzzleNumber(Newpuzzlename)) + " · " + Localized(arr, "title") : PrettyName(Newpuzzlename);
     var stars = document.getElementById("PuzzleStars");
     stars.textContent = arr.difficulty ? Stars(arr.difficulty) : "";
-    stars.title = arr.difficulty ? DifficultyText(arr.difficulty) + " in this grid" : "";
+    stars.title = arr.difficulty ? T("{0} in this grid", DifficultyText(arr.difficulty)) : "";
     stars.setAttribute("aria-label", stars.title);
-    document.title = "RegEx puzzle " + Newpuzzlename;
+    document.title = T("RegEx puzzle {0}", PrettyName(Newpuzzlename));
 
     var svg = document.getElementById("SVG");
     while (svg.firstChild)
@@ -1088,6 +1139,9 @@ function StartPuzzle(arr, Newpuzzlename) {
             positioned: false
         };
     }
+    var marks = (Load(progressKey + "WRONG") || "").split(",");
+    for (var i in Field)
+        Field[i].markedWrong = marks.indexOf(i) >= 0 && Field[i].user.length == 1 && Field[i].user != Field[i].solution;
 
     for (var i in arr.regexes) {
         var Positions = arr.regexes[i].positions;
@@ -1215,6 +1269,7 @@ function StartPuzzle(arr, Newpuzzlename) {
     OrientLabels();
     for (var fieldpos in Field)
         DrawCell(fieldpos);
+    ShowMarks();
     CheckLines();
 
     // Fit the drawing into the space below the toolbars, or show it as it was left

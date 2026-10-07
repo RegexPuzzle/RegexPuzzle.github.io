@@ -1,14 +1,14 @@
 {
-"Alphabet":["E","J","K","F","A","B","C","D","G","H","L","M"],
+"Alphabet":["G","C","K","D","F","M","A","B","E","H","J","L"],
 "field": {
 "00": "F",
-"01": "J",
-"10": "E",
-"11": "K"}, 
+"01": "C",
+"10": "G",
+"11": "D"}, 
 "regexes":[
- {"positions":["00","10"], "regex": ".*E"},
- {"positions":["01","11"], "regex": "[EJ]*K"},
- {"positions":["00","01"], "regex": ".*FJ*"},
+ {"positions":["00","10"], "regex": ".*G+"},
+ {"positions":["01","11"], "regex": "[CK]D"},
+ {"positions":["00","01"], "regex": "F*CM*"},
  {"positions":["10","11"], "regex": ".*"}],
 "steps":[
  {"cell":"10", "lines":[0]},
@@ -17,4 +17,4 @@
  {"cell":"00", "lines":[2]}],
 "grade": {"medium":1, "depth":3},
 "difficulty": 1,
-"id": "0243b62bedad4de3"}
+"id": "95e1023c88f5fa8f"}

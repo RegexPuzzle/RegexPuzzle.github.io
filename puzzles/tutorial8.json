@@ -68,6 +68,9 @@
 "regex": "B(A|B)B"
 }
 ],
+"title_nl": "Wat het streepje scheidt",
+"level_nl": "Groepen",
+"hint_nl": "Het streepje scheidt alles tussen de dichtstbijzijnde haakjes: (AB|C) is AB of C, maar A(B|C) is een A gevolgd door B of C. Vergelijk de eerste twee rijen.",
 "steps":[
  {"cell":"00", "lines":[0]},
  {"cell":"02", "lines":[0]},

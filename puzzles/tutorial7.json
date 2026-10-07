@@ -99,6 +99,9 @@
 "regex": "B+AC"
 }
 ],
+"title_nl": "Groepen",
+"level_nl": "Groepen",
+"hint_nl": "Haakjes maken een groep: (AB)+ herhaalt AB als geheel, AB of ABAB, en in (C|AB) kiest het streepje tussen C en AB. Een groep kan ook optioneel zijn: (BC)? is BC of niets.",
 "steps":[
  {"cell":"00", "lines":[0]},
  {"cell":"01", "lines":[0]},
