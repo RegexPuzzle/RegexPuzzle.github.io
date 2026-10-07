@@ -36,12 +36,14 @@
  {"positions":["20","21","22","23","24"], "regex": "(L.|.L)*."},
  {"positions":["10","11","12","13"], "regex": ".*E.*"},
  {"positions":["00","01","02"], "regex": "..*L.*"}],
+"difficulty": 5,
+"id": "3ba5f1c68d533138",
 "steps":[
- {"cell":"10", "lines":[0]},
  {"cell":"13", "lines":[5]},
  {"cell":"24", "lines":[5]},
  {"cell":"43", "lines":[10]},
  {"cell":"44", "lines":[10]},
+ {"cell":"10", "lines":[0]},
  {"cell":"21", "lines":[1,11]},
  {"cell":"20", "lines":[12]},
  {"cell":"00", "lines":[0]},
@@ -56,6 +58,4 @@
  {"cell":"11", "lines":[7]},
  {"cell":"12", "lines":[13]},
  {"cell":"42", "lines":[2]}],
-"grade": {"medium":4, "depth":13},
-"difficulty": 5,
-"id": "3ba5f1c68d533138"}
+"grade": {"medium":4, "depth":13}}

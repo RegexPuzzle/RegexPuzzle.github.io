@@ -111,6 +111,7 @@
 "title_nl": "Je eerste echte puzzel",
 "level_nl": "Zelf aan de slag",
 "hint_nl": "Een echte puzzel, de makkelijkste van de Makkelijke 4x4's. Kom je vast te zitten? Hint kleurt je letters groen (goed) of rood (fout), en markeert de volgende stap: de expressie die een vakje alleen bepaalt, of de expressies die het samen bepalen.",
+"id": "8afdf59d8b681a9e",
 "steps":[
  {"cell":"00", "lines":[0]},
  {"cell":"30", "lines":[0]},
@@ -128,5 +129,4 @@
  {"cell":"01", "lines":[4]},
  {"cell":"02", "lines":[4]},
  {"cell":"20", "lines":[6]}],
-"grade": {"medium":0, "depth":2},
-"id": "8afdf59d8b681a9e"}
+"grade": {"medium":0, "depth":2}}

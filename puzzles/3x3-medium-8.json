@@ -17,6 +17,8 @@
  {"positions":["00","01","02"], "regex": ".*K..*"},
  {"positions":["10","11","12"], "regex": ".[EB]*G"},
  {"positions":["20","21","22"], "regex": ".*"}],
+"difficulty": 4,
+"id": "31ffc22bf233ca74",
 "steps":[
  {"cell":"10", "lines":[0]},
  {"cell":"20", "lines":[0]},
@@ -27,6 +29,4 @@
  {"cell":"11", "lines":[1,4]},
  {"cell":"01", "lines":[1]},
  {"cell":"21", "lines":[1]}],
-"grade": {"medium":2, "depth":5},
-"difficulty": 4,
-"id": "31ffc22bf233ca74"}
+"grade": {"medium":2, "depth":5}}

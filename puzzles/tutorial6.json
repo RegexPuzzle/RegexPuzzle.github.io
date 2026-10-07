@@ -71,6 +71,7 @@
 "title_nl": "Misschien, of precies zoveel",
 "level_nl": "Herhalen",
 "hint_nl": "Een ? maakt wat ervoor staat optioneel: in AB?C{2} mag de B ontbreken. {2} herhaalt het precies twee keer, {1,2} een of twee keer.",
+"id": "79980319a46663c9",
 "steps":[
  {"cell":"00", "lines":[0]},
  {"cell":"01", "lines":[0]},
@@ -81,5 +82,4 @@
  {"cell":"21", "lines":[2]},
  {"cell":"22", "lines":[2]},
  {"cell":"20", "lines":[3]}],
-"grade": {"medium":0, "depth":1},
-"id": "79980319a46663c9"}
+"grade": {"medium":0, "depth":1}}

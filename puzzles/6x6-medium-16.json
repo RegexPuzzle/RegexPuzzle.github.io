@@ -50,9 +50,10 @@
  {"positions":["30","31","32","33","34","35"], "regex": "(.*E){2}[^EM]*FF.*"},
  {"positions":["40","41","42","43","44","45"], "regex": ".*[DJ]+J.*D.*"},
  {"positions":["50","51","52","53","54","55"], "regex": "[LEJM]*L"}],
+"extra": true,
+"difficulty": 6,
+"id": "484c44ec2272013e",
 "steps":[
- {"cell":"00", "lines":[0]},
- {"cell":"10", "lines":[0]},
  {"cell":"02", "lines":[2]},
  {"cell":"52", "lines":[2]},
  {"cell":"03", "lines":[3]},
@@ -65,6 +66,8 @@
  {"cell":"34", "lines":[9]},
  {"cell":"35", "lines":[9]},
  {"cell":"24", "lines":[4]},
+ {"cell":"00", "lines":[0]},
+ {"cell":"10", "lines":[0]},
  {"cell":"50", "lines":[0,11]},
  {"cell":"40", "lines":[0]},
  {"cell":"12", "lines":[1,7]},
@@ -87,7 +90,4 @@
  {"cell":"01", "lines":[1]},
  {"cell":"11", "lines":[1]},
  {"cell":"22", "lines":[2,8]}],
-"grade": {"medium":12, "depth":22},
-"extra": true,
-"difficulty": 6,
-"id": "484c44ec2272013e"}
+"grade": {"medium":12, "depth":22}}

@@ -46,10 +46,10 @@
 "title_nl": "Kies een letter",
 "level_nl": "Basis",
 "hint_nl": "Vierkante haken bevatten een keuze voor één vakje: [AB] is een A of een B. Elk vakje ligt in een rij en een kolom, en de letter moet bij allebei passen: het vakje linksboven is [AB] in de rij en [AC] in de kolom, dus een A. Zo los je elke puzzel op.",
+"id": "113ae84d54661dc8",
 "steps":[
  {"cell":"00", "lines":[0,2]},
  {"cell":"01", "lines":[0,3]},
  {"cell":"10", "lines":[1,2]},
  {"cell":"11", "lines":[1,3]}],
-"grade": {"medium":4, "depth":4},
-"id": "113ae84d54661dc8"}
+"grade": {"medium":4, "depth":4}}

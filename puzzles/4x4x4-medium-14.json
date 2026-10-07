@@ -60,6 +60,9 @@
  {"positions":["20","21","22","23","24","25"], "regex": ".*"},
  {"positions":["10","11","12","13","14"], "regex": ".*M.*"},
  {"positions":["00","01","02","03"], "regex": "([DK]{2})\\1"}],
+"extra": true,
+"difficulty": 6,
+"id": "a4582467b05e236d",
 "steps":[
  {"cell":"41", "lines":[1]},
  {"cell":"63", "lines":[3]},
@@ -79,8 +82,8 @@
  {"cell":"02", "lines":[20]},
  {"cell":"64", "lines":[12,14]},
  {"cell":"03", "lines":[5,7,20]},
- {"cell":"25", "lines":[7]},
  {"cell":"01", "lines":[20]},
+ {"cell":"25", "lines":[7]},
  {"cell":"12", "lines":[2,4,5,8,9,15,16,19]},
  {"cell":"23", "lines":[5,9]},
  {"cell":"34", "lines":[5,9]},
@@ -98,7 +101,4 @@
  {"cell":"66", "lines":[10]},
  {"cell":"42", "lines":[16]},
  {"cell":"20", "lines":[12]}],
-"grade": {"medium":13, "depth":24},
-"extra": true,
-"difficulty": 6,
-"id": "a4582467b05e236d"}
+"grade": {"medium":13, "depth":24}}

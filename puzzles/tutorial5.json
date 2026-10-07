@@ -71,6 +71,7 @@
 "title_nl": "Steeds weer",
 "level_nl": "Herhalen",
 "hint_nl": "Een * herhaalt wat er direct voor staat, een willekeurig aantal keer, ook nul keer: A*B+ kan alleen uit B's bestaan. Een + herhaalt het minstens één keer: A+C* begint met een of meer A's.",
+"id": "3a6bbc49aab86348",
 "steps":[
  {"cell":"02", "lines":[0]},
  {"cell":"10", "lines":[1]},
@@ -81,5 +82,4 @@
  {"cell":"11", "lines":[4]},
  {"cell":"21", "lines":[4]},
  {"cell":"12", "lines":[5]}],
-"grade": {"medium":0, "depth":1},
-"id": "3a6bbc49aab86348"}
+"grade": {"medium":0, "depth":1}}

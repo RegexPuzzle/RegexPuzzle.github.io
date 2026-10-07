@@ -26,6 +26,8 @@
  {"positions":["10","11","12","13"], "regex": "L*BH*"},
  {"positions":["20","21","22","23"], "regex": "(.)BD\\1"},
  {"positions":["30","31","32","33"], "regex": "A(.)\\1{2}"}],
+"difficulty": 5,
+"id": "4ca19fc8d0b8bf50",
 "steps":[
  {"cell":"21", "lines":[6]},
  {"cell":"22", "lines":[6]},
@@ -43,6 +45,4 @@
  {"cell":"32", "lines":[2]},
  {"cell":"31", "lines":[7]},
  {"cell":"33", "lines":[7]}],
-"grade": {"medium":3, "depth":11},
-"difficulty": 5,
-"id": "4ca19fc8d0b8bf50"}
+"grade": {"medium":3, "depth":11}}

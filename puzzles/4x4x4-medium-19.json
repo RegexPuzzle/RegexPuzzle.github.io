@@ -60,6 +60,9 @@
  {"positions":["20","21","22","23","24","25"], "regex": ".*.B.*"},
  {"positions":["10","11","12","13","14"], "regex": ".*"},
  {"positions":["00","01","02","03"], "regex": ".*(.*C|CJ)J"}],
+"extra": true,
+"difficulty": 6,
+"id": "8cde8f844d4a2c40",
 "steps":[
  {"cell":"63", "lines":[14]},
  {"cell":"66", "lines":[14]},
@@ -94,11 +97,8 @@
  {"cell":"55", "lines":[4,10]},
  {"cell":"22", "lines":[2,4,10]},
  {"cell":"44", "lines":[4,10]},
- {"cell":"54", "lines":[4]},
  {"cell":"41", "lines":[16]},
+ {"cell":"54", "lines":[4]},
  {"cell":"42", "lines":[2,9,16]},
  {"cell":"45", "lines":[16]}],
-"grade": {"medium":14, "depth":29},
-"extra": true,
-"difficulty": 6,
-"id": "8cde8f844d4a2c40"}
+"grade": {"medium":14, "depth":29}}

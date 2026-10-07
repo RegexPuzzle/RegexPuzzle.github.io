@@ -17,6 +17,9 @@
  {"positions":["00","01","02"], "regex": "D*K*D"},
  {"positions":["10","11","12"], "regex": "[FHL]*F"},
  {"positions":["20","21","22"], "regex": ".*(L.|KL)"}],
+"extra": true,
+"difficulty": 6,
+"id": "a58362b63284180a",
 "steps":[
  {"cell":"20", "lines":[0]},
  {"cell":"02", "lines":[3]},
@@ -27,7 +30,4 @@
  {"cell":"11", "lines":[1,4]},
  {"cell":"21", "lines":[1,5]},
  {"cell":"22", "lines":[5]}],
-"grade": {"medium":5, "depth":7},
-"extra": true,
-"difficulty": 6,
-"id": "a58362b63284180a"}
+"grade": {"medium":5, "depth":7}}

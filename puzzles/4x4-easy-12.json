@@ -26,6 +26,9 @@
  {"positions":["10","11","12","13"], "regex": "(.*)\\1"},
  {"positions":["20","21","22","23"], "regex": "(.*)\\1"},
  {"positions":["30","31","32","33"], "regex": "D+EL*"}],
+"extra": true,
+"difficulty": 6,
+"id": "c94959f9dca29e73",
 "steps":[
  {"cell":"02", "lines":[2]},
  {"cell":"12", "lines":[2]},
@@ -43,7 +46,4 @@
  {"cell":"21", "lines":[1]},
  {"cell":"13", "lines":[5]},
  {"cell":"23", "lines":[6]}],
-"grade": {"medium":0, "depth":8},
-"extra": true,
-"difficulty": 6,
-"id": "c94959f9dca29e73"}
+"grade": {"medium":0, "depth":8}}

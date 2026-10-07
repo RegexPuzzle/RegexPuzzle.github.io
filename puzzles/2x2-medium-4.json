@@ -10,11 +10,11 @@
  {"positions":["01","11"], "regex": ".*"},
  {"positions":["00","01"], "regex": ".|F*|J*"},
  {"positions":["10","11"], "regex": "JE|M."}],
+"difficulty": 2,
+"id": "8064a31f39b70526",
 "steps":[
  {"cell":"00", "lines":[0,2,3]},
- {"cell":"10", "lines":[0]},
  {"cell":"01", "lines":[2]},
+ {"cell":"10", "lines":[0]},
  {"cell":"11", "lines":[3]}],
-"grade": {"medium":1, "depth":3},
-"difficulty": 2,
-"id": "8064a31f39b70526"}
+"grade": {"medium":1, "depth":3}}

@@ -17,6 +17,9 @@
  {"positions":["00","01","02"], "regex": "(AA|H)*"},
  {"positions":["10","11","12"], "regex": "HC*A*"},
  {"positions":["20","21","22"], "regex": "[AK]*D.*"}],
+"extra": true,
+"difficulty": 6,
+"id": "70fe19f031a26521",
 "steps":[
  {"cell":"10", "lines":[4]},
  {"cell":"20", "lines":[0,5]},
@@ -27,7 +30,4 @@
  {"cell":"00", "lines":[3]},
  {"cell":"01", "lines":[3]},
  {"cell":"12", "lines":[2,4]}],
-"grade": {"medium":5, "depth":8},
-"extra": true,
-"difficulty": 6,
-"id": "70fe19f031a26521"}
+"grade": {"medium":5, "depth":8}}

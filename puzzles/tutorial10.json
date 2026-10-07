@@ -102,7 +102,10 @@
 "title_nl": "Twee echo's",
 "level_nl": "Groepen",
 "hint_nl": "Elke groep heeft een nummer: tel de openingshaakjes van links. \\2 herhaalt wat de tweede groep vond. Een groep kan meer dan één letter bevatten: (..)\\1 is ABAB, CACA, ...",
+"id": "2a9879247609e122",
 "steps":[
+ {"cell":"02", "lines":[6]},
+ {"cell":"22", "lines":[6]},
  {"cell":"11", "lines":[1]},
  {"cell":"23", "lines":[2]},
  {"cell":"30", "lines":[3]},
@@ -112,12 +115,9 @@
  {"cell":"00", "lines":[4]},
  {"cell":"10", "lines":[4]},
  {"cell":"20", "lines":[4]},
- {"cell":"02", "lines":[6]},
- {"cell":"22", "lines":[6]},
  {"cell":"03", "lines":[7]},
  {"cell":"13", "lines":[7]},
  {"cell":"01", "lines":[0]},
  {"cell":"12", "lines":[1]},
  {"cell":"21", "lines":[5]}],
-"grade": {"medium":0, "depth":3},
-"id": "2a9879247609e122"}
+"grade": {"medium":0, "depth":3}}

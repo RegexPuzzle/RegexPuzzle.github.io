@@ -17,6 +17,9 @@
  {"positions":["00","01","02"], "regex": "[CL]*"},
  {"positions":["10","11","12"], "regex": "B*.A*"},
  {"positions":["20","21","22"], "regex": "B*A.*"}],
+"extra": true,
+"difficulty": 6,
+"id": "992a3cf287dd7d8a",
 "steps":[
  {"cell":"00", "lines":[0,3]},
  {"cell":"20", "lines":[0,5]},
@@ -27,7 +30,4 @@
  {"cell":"02", "lines":[2,3]},
  {"cell":"12", "lines":[2]},
  {"cell":"11", "lines":[4]}],
-"grade": {"medium":6, "depth":9},
-"extra": true,
-"difficulty": 6,
-"id": "992a3cf287dd7d8a"}
+"grade": {"medium":6, "depth":9}}

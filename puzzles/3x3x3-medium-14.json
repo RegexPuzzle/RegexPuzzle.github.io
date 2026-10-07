@@ -36,6 +36,9 @@
  {"positions":["20","21","22","23","24"], "regex": "B*AC*"},
  {"positions":["10","11","12","13"], "regex": "M*.C*"},
  {"positions":["00","01","02"], "regex": "(AE)+."}],
+"extra": true,
+"difficulty": 6,
+"id": "b500ec6a31fd0489",
 "steps":[
  {"cell":"44", "lines":[4]},
  {"cell":"00", "lines":[14]},
@@ -51,12 +54,9 @@
  {"cell":"24", "lines":[12]},
  {"cell":"11", "lines":[7,12]},
  {"cell":"21", "lines":[1,12]},
- {"cell":"31", "lines":[1]},
  {"cell":"20", "lines":[12]},
  {"cell":"22", "lines":[12]},
+ {"cell":"31", "lines":[1]},
  {"cell":"32", "lines":[11]},
  {"cell":"02", "lines":[2]}],
-"grade": {"medium":7, "depth":14},
-"extra": true,
-"difficulty": 6,
-"id": "b500ec6a31fd0489"}
+"grade": {"medium":7, "depth":14}}

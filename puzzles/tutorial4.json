@@ -47,10 +47,10 @@
 "title_nl": "Alles behalve",
 "level_nl": "Basis",
 "hint_nl": "Een streepje maakt een reeks: [A-C] is A, B of C. Een ^ direct na de [ draait de keuze om: [^AB] is elke letter behalve A en B, en [^A-C] elke letter na C.",
+"id": "7d94435e5c5a250b",
 "steps":[
  {"cell":"00", "lines":[0]},
  {"cell":"01", "lines":[0]},
  {"cell":"10", "lines":[1,2]},
  {"cell":"11", "lines":[1,3]}],
-"grade": {"medium":2, "depth":3},
-"id": "7d94435e5c5a250b"}
+"grade": {"medium":2, "depth":3}}

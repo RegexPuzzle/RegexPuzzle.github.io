@@ -36,6 +36,8 @@
  {"positions":["20","21","22","23","24"], "regex": "K(M)\\1.*K"},
  {"positions":["10","11","12","13"], "regex": "(.*L)\\1+"},
  {"positions":["00","01","02"], "regex": ".*"}],
+"difficulty": 2,
+"id": "aa3ee629b2ad6566",
 "steps":[
  {"cell":"00", "lines":[0]},
  {"cell":"02", "lines":[2]},
@@ -49,13 +51,11 @@
  {"cell":"21", "lines":[12]},
  {"cell":"22", "lines":[12]},
  {"cell":"24", "lines":[12]},
+ {"cell":"01", "lines":[6]},
  {"cell":"11", "lines":[13]},
  {"cell":"13", "lines":[13]},
- {"cell":"01", "lines":[6]},
  {"cell":"31", "lines":[11]},
  {"cell":"34", "lines":[11]},
  {"cell":"12", "lines":[6]},
  {"cell":"10", "lines":[13]}],
-"grade": {"medium":0, "depth":4},
-"difficulty": 2,
-"id": "aa3ee629b2ad6566"}
+"grade": {"medium":0, "depth":4}}

@@ -10,11 +10,11 @@
  {"positions":["01","11"], "regex": "[CK]D"},
  {"positions":["00","01"], "regex": "F*CM*"},
  {"positions":["10","11"], "regex": ".*"}],
+"difficulty": 1,
+"id": "95e1023c88f5fa8f",
 "steps":[
  {"cell":"10", "lines":[0]},
  {"cell":"11", "lines":[1]},
  {"cell":"01", "lines":[1,2]},
  {"cell":"00", "lines":[2]}],
-"grade": {"medium":1, "depth":3},
-"difficulty": 1,
-"id": "95e1023c88f5fa8f"}
+"grade": {"medium":1, "depth":3}}

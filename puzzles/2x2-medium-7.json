@@ -10,11 +10,11 @@
  {"positions":["01","11"], "regex": ".*"},
  {"positions":["00","01"], "regex": "(.)\\1"},
  {"positions":["10","11"], "regex": "[DH]*D"}],
+"difficulty": 4,
+"id": "7d6c71964bd01361",
 "steps":[
  {"cell":"11", "lines":[3]},
  {"cell":"10", "lines":[0,3]},
  {"cell":"00", "lines":[0]},
  {"cell":"01", "lines":[2]}],
-"grade": {"medium":1, "depth":4},
-"difficulty": 4,
-"id": "7d6c71964bd01361"}
+"grade": {"medium":1, "depth":4}}

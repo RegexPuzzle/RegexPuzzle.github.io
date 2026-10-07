@@ -71,15 +71,15 @@
 "title_nl": "Echo",
 "level_nl": "Groepen",
 "hint_nl": "(.) onthoudt de letter die hij vindt, en \\1 moet diezelfde letter nog eens zijn: (.)B\\1 is ABA, BBB of CBC.",
+"id": "5844acd7d4f2e6a2",
 "steps":[
- {"cell":"01", "lines":[0]},
- {"cell":"12", "lines":[1]},
  {"cell":"00", "lines":[3]},
  {"cell":"10", "lines":[3]},
  {"cell":"20", "lines":[3]},
+ {"cell":"01", "lines":[4]},
  {"cell":"21", "lines":[4]},
+ {"cell":"12", "lines":[1]},
  {"cell":"02", "lines":[5]},
  {"cell":"11", "lines":[1]},
  {"cell":"22", "lines":[2]}],
-"grade": {"medium":0, "depth":2},
-"id": "5844acd7d4f2e6a2"}
+"grade": {"medium":0, "depth":2}}

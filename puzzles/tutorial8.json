@@ -71,6 +71,7 @@
 "title_nl": "Wat het streepje scheidt",
 "level_nl": "Groepen",
 "hint_nl": "Het streepje scheidt alles tussen de dichtstbijzijnde haakjes: (AB|C) is AB of C, maar A(B|C) is een A gevolgd door B of C. Vergelijk de eerste twee rijen.",
+"id": "a7675c026f070a31",
 "steps":[
  {"cell":"00", "lines":[0]},
  {"cell":"02", "lines":[0]},
@@ -81,5 +82,4 @@
  {"cell":"21", "lines":[4]},
  {"cell":"22", "lines":[5]},
  {"cell":"11", "lines":[1]}],
-"grade": {"medium":0, "depth":2},
-"id": "a7675c026f070a31"}
+"grade": {"medium":0, "depth":2}}

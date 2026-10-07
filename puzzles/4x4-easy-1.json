@@ -26,6 +26,8 @@
  {"positions":["10","11","12","13"], "regex": "GM.+F"},
  {"positions":["20","21","22","23"], "regex": ".*G.*H"},
  {"positions":["30","31","32","33"], "regex": ".*F"}],
+"difficulty": 1,
+"id": "8afdf59d8b681a9e",
 "steps":[
  {"cell":"00", "lines":[0]},
  {"cell":"30", "lines":[0]},
@@ -43,6 +45,4 @@
  {"cell":"01", "lines":[4]},
  {"cell":"02", "lines":[4]},
  {"cell":"20", "lines":[6]}],
-"grade": {"medium":0, "depth":2},
-"difficulty": 1,
-"id": "8afdf59d8b681a9e"}
+"grade": {"medium":0, "depth":2}}

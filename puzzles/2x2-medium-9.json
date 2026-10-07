@@ -10,11 +10,11 @@
  {"positions":["01","11"], "regex": ".*"},
  {"positions":["00","01"], "regex": "[AGCL]A"},
  {"positions":["10","11"], "regex": "[FCE]A"}],
+"difficulty": 5,
+"id": "364c5eabb7900bd4",
 "steps":[
  {"cell":"01", "lines":[2]},
  {"cell":"11", "lines":[3]},
  {"cell":"00", "lines":[0,2]},
  {"cell":"10", "lines":[0,3]}],
-"grade": {"medium":2, "depth":3},
-"difficulty": 5,
-"id": "364c5eabb7900bd4"}
+"grade": {"medium":2, "depth":3}}

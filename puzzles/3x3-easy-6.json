@@ -17,6 +17,8 @@
  {"positions":["00","01","02"], "regex": ".*"},
  {"positions":["10","11","12"], "regex": "H*E."},
  {"positions":["20","21","22"], "regex": ".JE|E.."}],
+"difficulty": 3,
+"id": "d5ace30db46b3399",
 "steps":[
  {"cell":"20", "lines":[0]},
  {"cell":"02", "lines":[2]},
@@ -27,6 +29,4 @@
  {"cell":"21", "lines":[5]},
  {"cell":"22", "lines":[5]},
  {"cell":"01", "lines":[1]}],
-"grade": {"medium":0, "depth":3},
-"difficulty": 3,
-"id": "d5ace30db46b3399"}
+"grade": {"medium":0, "depth":3}}

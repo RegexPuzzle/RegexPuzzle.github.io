@@ -26,6 +26,9 @@
  {"positions":["10","11","12","13"], "regex": ".*H.*"},
  {"positions":["20","21","22","23"], "regex": "(..*)\\1.*"},
  {"positions":["30","31","32","33"], "regex": "H{2}.*"}],
+"extra": true,
+"difficulty": 6,
+"id": "92468128c17417be",
 "steps":[
  {"cell":"30", "lines":[7]},
  {"cell":"31", "lines":[7]},
@@ -43,7 +46,4 @@
  {"cell":"02", "lines":[2]},
  {"cell":"12", "lines":[2]},
  {"cell":"32", "lines":[2]}],
-"grade": {"medium":7, "depth":12},
-"extra": true,
-"difficulty": 6,
-"id": "92468128c17417be"}
+"grade": {"medium":7, "depth":12}}

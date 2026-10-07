@@ -36,6 +36,9 @@
  {"positions":["20","21","22","23","24"], "regex": ".[AH]*D"},
  {"positions":["10","11","12","13"], "regex": "G*.A*"},
  {"positions":["00","01","02"], "regex": "H*|F*|."}],
+"extra": true,
+"difficulty": 6,
+"id": "f4b4ef3378adaf81",
 "steps":[
  {"cell":"31", "lines":[1]},
  {"cell":"42", "lines":[9]},
@@ -56,7 +59,4 @@
  {"cell":"44", "lines":[4,7]},
  {"cell":"34", "lines":[4]},
  {"cell":"32", "lines":[11]}],
-"grade": {"medium":8, "depth":14},
-"extra": true,
-"difficulty": 6,
-"id": "f4b4ef3378adaf81"}
+"grade": {"medium":8, "depth":14}}

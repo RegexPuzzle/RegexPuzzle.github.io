@@ -46,10 +46,10 @@
 "title_nl": "Letters en punten",
 "level_nl": "Basis",
 "hint_nl": "Elk vakje krijgt één letter. Elke rij (van links naar rechts) en elke kolom (van boven naar beneden) moet passen bij zijn reguliere expressie. Een letter betekent die letter, een punt . betekent een willekeurige letter. De bovenste rij begint dus met een A. Tik op een vakje en dan op een letter.",
+"id": "148b907abbb762e1",
 "steps":[
  {"cell":"00", "lines":[0]},
  {"cell":"11", "lines":[1]},
  {"cell":"10", "lines":[2]},
  {"cell":"01", "lines":[3]}],
-"grade": {"medium":0, "depth":1},
-"id": "148b907abbb762e1"}
+"grade": {"medium":0, "depth":1}}

@@ -10,11 +10,11 @@
  {"positions":["01","11"], "regex": ".*"},
  {"positions":["00","01"], "regex": ".E"},
  {"positions":["10","11"], "regex": "K*F*J"}],
+"difficulty": 1,
+"id": "a983491354a71d8c",
 "steps":[
  {"cell":"00", "lines":[0]},
  {"cell":"01", "lines":[2]},
  {"cell":"11", "lines":[3]},
  {"cell":"10", "lines":[0,3]}],
-"grade": {"medium":1, "depth":2},
-"difficulty": 1,
-"id": "a983491354a71d8c"}
+"grade": {"medium":1, "depth":2}}

@@ -10,12 +10,12 @@
  {"positions":["01","11"], "regex": "(L.|D)*L*"},
  {"positions":["00","01"], "regex": "MD|.M"},
  {"positions":["10","11"], "regex": "E*L*A*"}],
+"extra": true,
+"difficulty": 6,
+"id": "820fdba6c58dbbf3",
 "steps":[
  {"cell":"10", "lines":[0,3]},
  {"cell":"01", "lines":[1,2]},
  {"cell":"00", "lines":[2]},
  {"cell":"11", "lines":[1,3]}],
-"grade": {"medium":3, "depth":4},
-"extra": true,
-"difficulty": 6,
-"id": "820fdba6c58dbbf3"}
+"grade": {"medium":3, "depth":4}}

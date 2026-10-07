@@ -26,6 +26,8 @@
  {"positions":["10","11","12","13"], "regex": "JH*F{1,2}"},
  {"positions":["20","21","22","23"], "regex": "K(JC.*|.*J)"},
  {"positions":["30","31","32","33"], "regex": "(H)(.H)*\\1"}],
+"difficulty": 3,
+"id": "a1f4c97ce3a18369",
 "steps":[
  {"cell":"01", "lines":[1]},
  {"cell":"31", "lines":[1]},
@@ -43,6 +45,4 @@
  {"cell":"21", "lines":[6]},
  {"cell":"22", "lines":[6]},
  {"cell":"12", "lines":[2]}],
-"grade": {"medium":0, "depth":4},
-"difficulty": 3,
-"id": "a1f4c97ce3a18369"}
+"grade": {"medium":0, "depth":4}}
