@@ -70,6 +70,6 @@ function DoPuzzle(puzzlename) {
 function gotomain() {
     if (puzzlename && !localStorage[progressKey + "DONE"])
         testField(false); // remembers a finished puzzle, before leaving the page
-    window.location = "Overview.html?v=32"; // ?v=: a new version of the scripts, not the cached one
+    window.location = "Overview.html?v=33"; // ?v=: a new version of the scripts, not the cached one
 }
 app.initialize();

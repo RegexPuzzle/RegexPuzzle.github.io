@@ -19,7 +19,7 @@ var TEXTS_NL = {
     "Install as app: tap Share, then Add to Home Screen.": "Installeren als app: tik op Deel, dan Zet op beginscherm.",
     "Installing as an app needs a secure (https) address. Use the browser menu's Add to Home screen for a shortcut.":
         "Installeren als app kan alleen via een beveiligd (https) adres. Gebruik Toevoegen aan startscherm in het browsermenu voor een snelkoppeling.",
-    "Easy": "Makkelijk", "Medium": "Gemiddeld",
+    "Easy": "Makkelijk", "Medium": "Gemiddeld", "Extra": "Extra",
     "extra hard": "extra moeilijk",
     "difficulty {0} of 5": "moeilijkheid {0} van 5",
     "{0} in this grid": "{0} binnen dit formaat",
@@ -113,7 +113,7 @@ function TranslatePage() {
 
 // Puzzle names as players read them: "7x7x7-medium-11" -> "7x7x7 Medium #11", "tutorial3" -> "Lesson 3"
 function PrettyName(name) {
-    var m = /^(.+)-(easy|medium)-(\d+)$/.exec(name);
+    var m = /^(.+)-(easy|medium|extra)-(\d+)$/.exec(name);
     if (m)
         return m[1] + " " + T(m[2].charAt(0).toUpperCase() + m[2].slice(1)) + " #" + m[3];
     m = /^tutorial(\d+)$/.exec(name);

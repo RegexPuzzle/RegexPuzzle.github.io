@@ -1,7 +1,7 @@
 var deviceType = (navigator.userAgent.match(/iPad/i)) == "iPad" ? "iPad" : (navigator.userAgent.match(/iPhone/i)) == "iPhone" ? "iPhone" : (navigator.userAgent.match(/Android/i)) == "Android" ? "Android" : (navigator.userAgent.match(/BlackBerry/i)) == "BlackBerry" ? "BlackBerry" : "null";
 
 function DoPuzzle(puzzlename) {
-    window.location = "index.html?v=32#" + puzzlename; // ?v=: a new version of the scripts, not the cached one
+    window.location = "index.html?v=33#" + puzzlename; // ?v=: a new version of the scripts, not the cached one
 };
 
 function Element(tag, className, text) {
