@@ -490,11 +490,15 @@ function ShowHints() {
         el.setAttribute("data-hint", good ? "good" : "bad");
         wrong += !good;
     }
-    if (stepHint == "pending" && !wrong)
+    var newStep = false;
+    if (stepHint == "pending" && !wrong) {
         stepHint = NextStep();
-    else if (stepHint && typeof stepHint == "object" && Field[stepHint.cell].user == Field[stepHint.cell].solution)
+        newStep = !!stepHint;
+    } else if (stepHint && typeof stepHint == "object" && Field[stepHint.cell].user == Field[stepHint.cell].solution)
         stepHint = null; // done: Hint again for the next one
     MarkStep(hintMode ? stepHint : null);
+    if (newStep && hintMode)
+        SelectCell(stepHint.cell, false); // the marked cell is selected, so the next letter goes there
     if (hintMode) {
         var hints = Number(Load(progressKey + "HINTS") || 0), text;
         if (wrong)
