@@ -338,6 +338,8 @@ function Solved() {
     SelectCell(null, false);
     Wave();
     var hints = Number(Load(progressKey + "HINTS") || 0), time = Number(Load(progressKey + "TIME") || 0);
+    Track("solved/" + puzzlename, null, true);
+    Track((hints ? "solved-with-hints/" : "solved-without-hints/") + puzzlename, null, true);
     var box = document.getElementById("Solved");
     box.innerHTML = "";
     var title = document.createElement("b");
@@ -436,8 +438,10 @@ var stepHint = null; // null, "pending" (wait for the wrong letters to be fixed)
 
 function ToggleHints() {
     hintMode = !hintMode;
-    if (hintMode)
+    if (hintMode) {
         Save(progressKey + "HINTS", Number(Load(progressKey + "HINTS") || 0) + 1);
+        Track("hint/" + puzzlename, null, true);
+    }
     stepHint = hintMode && Steps.length ? "pending" : null;
     var button = document.getElementById("HintButton");
     button.className = "tool" + (hintMode ? " on" : "");
@@ -779,6 +783,8 @@ function SetText(char) {
             cell.user = char;
         cell.markedWrong = false;
         Save(progressKey + selectedCells[i], cell.user);
+        if (Load(progressKey + "STARTED") != "1")
+            Track("started/" + puzzlename, null, true); // the first letter in this puzzle
         Save(progressKey + "STARTED", "1");
         document.getElementById("CELL" + selectedCells[i]).setAttributeNS(null, "class", "cell selected");
         DrawCell(selectedCells[i]);
@@ -1077,6 +1083,7 @@ function SelectCell(Cell, addtoselection) {
 }
 
 function StartPuzzle(arr, Newpuzzlename) {
+    Track("puzzle/" + Newpuzzlename, PrettyName(Newpuzzlename));
     Field = {};
     FieldRegexes = arr.regexes;
     Alphabet = arr.Alphabet;

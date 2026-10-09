@@ -36,6 +36,7 @@ var TEXTS_NL = {
     "Always dark": "Altijd donker",
     "Dark colours also when the phone or computer is set to light": "Donkere kleuren, ook als de telefoon of computer op licht staat",
     "Keep Dark Reader off this site": "Dark Reader niet op deze site",
+    "This site counts visits anonymously: no cookies, no personal data.": "Deze site telt bezoeken anoniem: geen cookies, geen persoonsgegevens.",
     "Check a letter when you leave its cell": "Controleer een letter als je zijn vakje verlaat",
     "A wrong letter turns red. Every wrong letter counts as a hint.": "Een foute letter wordt rood. Elke foute letter telt als hint.",
     "The site has its own dark colours. Takes effect when the page loads again.": "De site heeft eigen donkere kleuren. Werkt nadat de pagina opnieuw geladen is.",
@@ -154,6 +155,29 @@ function Save(key, value) {
     }
 }
 
+// Anonymous usage counts with GoatCounter (the script in the head of both pages; no cookies, no personal data): a
+// page view per puzzle ("puzzle/<name>") and events ("solved/<name>", "hint/<name>", "setting/<key>=<value>", ...).
+// count.js loads async, so the counts wait in a queue; it counts nothing on localhost or the local network.
+var trackQueue = [], trackTimer = null, trackTries = 0;
+function Track(path, title, event) {
+    trackQueue.push({ path: path, title: title || path, event: !!event });
+    FlushTrack();
+}
+function FlushTrack() {
+    if (window.goatcounter && window.goatcounter.count) {
+        while (trackQueue.length)
+            try {
+                window.goatcounter.count(trackQueue.shift());
+            } catch (e) {
+            }
+        return;
+    }
+    if (!trackTimer && trackTries < 30) { // count.js is not loaded yet; after 30 s (blocked, offline) no more tries
+        trackTries++;
+        trackTimer = setTimeout(function () { trackTimer = null; FlushTrack(); }, 1000);
+    }
+}
+
 // Settings: stored as SETTING<key> = "true"/"false" (or the chosen option of a list), shown in one panel (ShowSettings)
 // on the overview and the puzzle page
 var SETTINGS = [
@@ -210,6 +234,7 @@ function ShowSettings(onChange) {
                 });
                 list.onchange = function () {
                     Save("SETTING" + s.key, list.value);
+                    Track("setting/" + s.key + "=" + list.value, null, true);
                     location.reload();
                 };
                 row.appendChild(text);
@@ -220,6 +245,7 @@ function ShowSettings(onChange) {
                 box.id = "SETTING" + s.key;
                 box.onchange = function () {
                     Save("SETTING" + s.key, box.checked ? "true" : "false");
+                    Track("setting/" + s.key + "=" + box.checked, null, true);
                     ApplyAppearance();
                     if (panel.onChange)
                         panel.onChange(s.key, box.checked);
